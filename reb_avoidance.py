@@ -26,7 +26,7 @@ def rcOverrides(roll, pitch, thr, yaw):
     vehicle.channels.overrides = {'1': roll, '2': pitch, '3': thr, '4': yaw}
 
 while True:
-    # Enable autonomous mode
+    # Catch critical state
     if vehicle.channels['8'] != None:
         if vehicle.channels['8'] > 1550 and vehicle.system_status.state == "CRITICAL":
             sys_state = vehicle.system_status.state
@@ -39,7 +39,7 @@ while True:
         elif vehicle.channels['8'] < 1550:
             print("Manual Flying")
             sys_state = None
-            sleep(0.1)    
+            sleep(0.1)
     else:
         print("Channel 8 is None!")
 
