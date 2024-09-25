@@ -30,7 +30,7 @@ while True:
     if vehicle.channels['8'] > 1550 and vehicle.system_status.state == "CRITICAL":
         sys_state = vehicle.system_status.state
         pitch = 1200
-        throttle = 1850
+        throttle = 1900
         vehicle.mode = VehicleMode("STABILIZE")
         roll = 1500
         yaw = 1500
