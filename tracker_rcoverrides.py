@@ -2,6 +2,7 @@
 
 import cv2 as cv
 from picamera2 import Picamera2
+from pymavlink import mavutil
 from dronekit import connect, VehicleMode
 from time import time, sleep
 
