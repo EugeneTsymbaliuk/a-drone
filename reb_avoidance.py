@@ -42,6 +42,7 @@ while True:
             sleep(0.1)    
     else:
         print("Channel 8 is NoneType!")
+        sleep(0.1)
 
     if sys_state is not None:
 #        vehicle.mode = VehicleMode("STABILIZE")
