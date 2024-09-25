@@ -11,7 +11,7 @@ from time import sleep
 
 # Wait 60 seconds
 print("Wait 60 seconds")
-sleep(60)
+#sleep(60)
 
 sys_state = None
 
@@ -29,8 +29,8 @@ while True:
     # Enable autonomous mode
     if vehicle.channels['8'] > 1550 and vehicle.system_status.state == "CRITICAL":
         sys_state = vehicle.system_status.state
-        pitch = vehicle.channels['2']
-        throttle = vehicle.channels['3'] + 100
+        pitch = 1200
+        throttle = 1850
         vehicle.mode = VehicleMode("STABILIZE")
         roll = 1500
         yaw = 1500
@@ -44,6 +44,7 @@ while True:
         # Overrides channels 1-4
         print("Autonomous flying")
         sleep(0.04)
+        print(roll, pitch, throttle, yaw)
         rcOverrides(roll, pitch, throttle, yaw)
 
     # Enable manual mode
