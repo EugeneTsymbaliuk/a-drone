@@ -42,10 +42,8 @@ while True:
             sleep(0.1)    
     else:
         print("Channel 8 is None!")
-        sleep(0.1)
 
     if sys_state is not None:
         # Overrides channels 1-4
         print("Autonomous flying")
-        sleep(0.04)
         rcOverrides(roll, pitch, throttle, yaw)
