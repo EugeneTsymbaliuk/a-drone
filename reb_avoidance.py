@@ -27,12 +27,12 @@ def rcOverrides(roll, pitch, thr, yaw):
 
 while True:
     # Enable autonomous mode
-    if vehicle.channels['8'] != "NoneType":
+    if vehicle.channels['8'] != None:
         if vehicle.channels['8'] > 1550 and vehicle.system_status.state == "CRITICAL":
             sys_state = vehicle.system_status.state
             pitch = 1200
             throttle = 1900
-            vehicle.mode = VehicleMode("STABILIZE")
+            vehicle.mode = VehicleMode("ALT_HOLD")
             roll = 1500
             yaw = 1500
 #           sleep(0.1)
@@ -41,23 +41,11 @@ while True:
             sys_state = None
             sleep(0.1)    
     else:
-        print("Channel 8 is NoneType!")
+        print("Channel 8 is None!")
         sleep(0.1)
 
     if sys_state is not None:
-#        vehicle.mode = VehicleMode("STABILIZE")
-#        pitch = vehicle.channels['2']
-#        throttle = vehicle.channels['3'] + 100
-#        roll = 1500
-#        yaw = 1500
         # Overrides channels 1-4
         print("Autonomous flying")
         sleep(0.04)
-        print(roll, pitch, throttle, yaw)
         rcOverrides(roll, pitch, throttle, yaw)
-
-    # Enable manual mode
-#    if vehicle.channels['8'] < 1550:
-#        print("Manual Flying")
-#        sys_state = None
-#        sleep(0.1)
