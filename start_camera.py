@@ -93,9 +93,8 @@ while True:
     # Stop tracking
     # Close video window
     if key == ord("q"):
-            # Close vehicle object
-            vehicle.close()
-            break
+        BB = None   
+#        break
     tEnd=time()
     loopTime=tEnd-tStart
     print(loopTime)
