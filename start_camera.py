@@ -8,6 +8,9 @@ from time import time, sleep
 dispW=720
 dispH=520
 
+# ROI size
+roi_size = 150
+
 # Center of video window
 x = dispW // 2
 y = dispH // 2
