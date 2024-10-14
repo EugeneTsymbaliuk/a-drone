@@ -28,6 +28,10 @@ tracker = cv.TrackerCSRT_create() # Initialize tracker with CSRT algorithm
 
 BB = None # Bounding Box
 
+def merge_roi(frame, roi, x, y):
+    frame[y:y+roi_size, x:x+roi_size, :] = roi
+    return frame
+
 def trackTarget(frame):
 #    global thr
     (success, box) = tracker.update(frame)
