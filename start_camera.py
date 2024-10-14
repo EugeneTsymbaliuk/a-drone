@@ -75,7 +75,6 @@ while True:
     
     if BB is not None:
         cv.putText(frame, "Tracking Enabled", (5,50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-        cv.putText(frame, "Throttle: " + str(thr), (5,70), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
         success, frame = trackTarget(frame) # Track object
         
 
