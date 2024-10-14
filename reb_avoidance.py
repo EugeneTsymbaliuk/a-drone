@@ -13,8 +13,6 @@ from time import sleep
 print("Wait 60 seconds")
 #sleep(60)
 
-sys_state = None
-
 # Create the connection to drone
 print('Connecting to FC')
 #vehicle = connect('tcp:192.168.1.140:5762')
@@ -27,21 +25,18 @@ def rcOverrides(roll, pitch, thr, yaw):
 
 while True:
     # Catch critical state
-    if vehicle.channels['8'] != None:
-        if vehicle.channels['8'] > 1550 and vehicle.system_status.state == "CRITICAL":
-            sys_state = vehicle.system_status.state
-            pitch = 1200
-            throttle = 1500
-            vehicle.mode = VehicleMode("ALT_HOLD")
-            roll = 1500
-            yaw = 1500
-#           sleep(0.1)
-        elif vehicle.channels['8'] < 1550:
-            print("Manual Flying")
-            sys_state = None
-            sleep(0.1)
-    else:
-        print("Channel 8 is None!")
+    if vehicle.channels['8'] > 1550 and vehicle.system_status.state == "CRITICAL":
+        sys_state = vehicle.system_status.state
+        pitch = 1200
+        throttle = 1500
+        vehicle.mode = VehicleMode("ALT_HOLD")
+        roll = 1500
+        yaw = 1500
+#        sleep(0.1)
+    elif vehicle.channels['8'] < 1550:
+        print("Manual Flying")
+        sys_state = None
+        sleep(0.1)
 
     if sys_state is not None:
         # Overrides channels 1-4
