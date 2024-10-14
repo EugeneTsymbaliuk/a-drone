@@ -91,10 +91,11 @@ while True:
         tracker.init(frame, BB)
 
     # Stop tracking
+    if key == ord("v"):
+        BB = None
     # Close video window
     if key == ord("q"):
-        BB = None   
-#        break
+        break
     tEnd=time()
     loopTime=tEnd-tStart
     print(loopTime)
