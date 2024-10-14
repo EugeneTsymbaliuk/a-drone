@@ -2,7 +2,6 @@
 
 import cv2 as cv
 from picamera2 import Picamera2
-from pymavlink import mavutil
 from dronekit import connect, VehicleMode
 from time import time, sleep
 
@@ -96,7 +95,7 @@ def trackTarget(frame):
         (x, y, w, h) = [int(v) for v in box]
         cv.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
         yaw_error = (x + w/2) - dispW/2
-#        pitch_error = (y + h/2) - dispH/2
+        pitch_error = (y + h/2) - dispH/2
         #print(yaw_error)
         if yaw_error > 10:
             print("Yaw right")     
@@ -108,15 +107,15 @@ def trackTarget(frame):
             ch4 = yaw - 10
 #        elif pitch_error > 10:
 #            print("Throttle down")
-#            if thr < start_thr - 50:
-#                thr = thr + 50
+#            if thr < 1300:
+#                thr = 1350
 #            ch1 = roll
 #            thr = thr - 3
 #            ch4 = yaw
 #        elif pitch_error < -10:
 #            print("Throttle up")
-#            if thr > thr_start + 100:
-#                thr = thr_start + 100
+#            if thr > 1900:
+#                thr = 1850
 #            ch1 = roll
 #            ch3 = thr + 100
 #            ch4 = yaw
@@ -141,7 +140,7 @@ while True:
     # Crop a region of interest (ROI) from the frame
     roi = frame[235:285, 335:385]
 
-    # For 640x480 resolution
+    # Draw rectangle in the center. For 640x480 resolution
     cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
 
     # Resize the ROI to a specific size (e.g., 200x200)
@@ -178,7 +177,7 @@ while True:
 
         # Save throttle and pitch values
         pitch = vehicle.channels['10']
-        start_thr, thr = (vehicle.channels['11'], vehicle.channels['11'])
+        thr = vehicle.channels['11']
 #        pitch = 1300
 #        thr = 1600     
         # Run tracking
@@ -188,9 +187,8 @@ while True:
 #    if key == ord("v"):
     if vehicle.channels['5'] < 1550:
         BB = None
-        chan1, chan2, chan3, chan4 = (vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
 #        print(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
-        rcOverrides(chan1, chan2, chan3, chan4)
+        rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
     # Close video window
     if key == ord("q"):
             # Close vehicle object
