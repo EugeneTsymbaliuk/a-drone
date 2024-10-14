@@ -93,6 +93,7 @@ while True:
     # Stop tracking
     if key == ord("v"):
         BB = None
+        
     # Close video window
     if key == ord("q"):
         break
