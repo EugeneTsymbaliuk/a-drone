@@ -17,12 +17,12 @@ BB = None
 
 # Wait 60 seconds
 print("Wait 60 seconds")
-#time.sleep(60)
+time.sleep(60)
 
 # Create the connection to drone
 print('Connecting to FC')
-vehicle = connect('tcp:192.168.1.145:5762', rate=40)
-#vehicle = connect("/dev/ttyAMA0", baud=57600, wait_ready=True,  timeout=100, rate=40)
+#vehicle = connect('tcp:192.168.1.145:5762', rate=40)
+vehicle = connect("/dev/ttyAMA0", baud=57600, wait_ready=True,  timeout=100, rate=40)
 print('Connected to FC')
 
 picam2 = Picamera2()
@@ -31,12 +31,12 @@ dispH=520
 
 picam2.preview_configuration.main.size = (dispW,dispH)
 picam2.preview_configuration.main.format = "RGB888"
-picam2.preview_configuration.controls.FrameRate=30
+picam2.preview_configuration.controls.FrameRate=40
 picam2.preview_configuration.align()
 picam2.configure("preview")
 picam2.start()
 
-fps=0
+#fps=0
 
 def rcOverrides(roll, pitch, thr, yaw):
     vehicle.channels.overrides = {'1': roll, '2': pitch, '3': thr, '4': yaw}
@@ -81,7 +81,7 @@ def trackTarget(frame, contours):
 
 
 while True:
-    tStart = time.time()
+#    tStart = time.time()
     frame = picam2.capture_array()
     frame = cv.flip(frame, -1)
     frameHSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
@@ -110,7 +110,7 @@ while True:
 
     # Enable targeting tracked object  
     if key == ord("c"):
-#    if vehicle.channels['5'] > 1550 and BB is None:
+#    if vehicle.channels['5'] > 1800 and BB is None:
         BB = 1
         # Enable stabilize mode
         if vehicle.mode != "STABILIZE":
@@ -118,7 +118,7 @@ while True:
         
     # Disable targeting tracked object
     if key == ord("v"):
-#    if vehicle.channels['5'] < 1550:
+#    if vehicle.channels['5'] < 1800:
         BB = None
         rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
 
@@ -130,8 +130,8 @@ while True:
         break
 
     # Count time
-    tEnd=time.time()
-    loopTime=tEnd-tStart
+#    tEnd=time.time()
+#    loopTime=tEnd-tStart
 #    print(loopTime)
 #    fps=.9*fps + .1*(1/loopTime)
 

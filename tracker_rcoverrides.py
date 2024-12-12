@@ -126,7 +126,7 @@ while True:
     
     # Select Region on Interest (ROI) to track
 #    if key == ord("c"):
-    if vehicle.channels['5'] > 1550 and BB is None:
+    if vehicle.channels['5'] > 1800 and BB is None:
 #        print("Object is tracking")
  
         # Set red square coordinates. For 720x520 resolution
@@ -144,7 +144,7 @@ while True:
 
     # Stop tracking
 #    if key == ord("v"):
-    if vehicle.channels['5'] < 1550:
+    if vehicle.channels['5'] < 1800:
         BB = None
 #        print(vehicle.channels['5'], vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
         rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
