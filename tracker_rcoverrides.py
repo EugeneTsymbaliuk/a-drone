@@ -15,7 +15,18 @@ roi_size = 150
 # Center of video window
 x = dispW // 2
 y = dispH // 2
-fps=0
+
+# FPS value for test
+#fps=0
+
+# Bounding Box
+BB = None
+
+# Channels1-4 values
+thr = 1500
+yaw = 1500
+roll = 1500
+pitch = 1200
 
 # Wait 60 seconds
 print("Wait 60 seconds")
@@ -40,15 +51,6 @@ picam2.start()
 
 # Object tracker
 tracker = cv.TrackerCSRT_create() # Initialize tracker with CSRT algorithm
-
-# Bounding Box
-BB = None
-
-# Channels1-4 values
-thr = 1500
-yaw = 1500
-roll = 1500
-pitch = 1200
 
 def rcOverrides(roll, pitch, thr, yaw):
     vehicle.channels.overrides = {'1': roll, '2': pitch, '3': thr, '4': yaw}
