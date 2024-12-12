@@ -85,7 +85,7 @@ while True:
     frame = picam2.capture_array()
     frame = cv.flip(frame, -1)
     frameHSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-    cv.putText(frame, str(int(fps))+' FPS', (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+#    cv.putText(frame, str(int(fps))+' FPS', (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
     # This boundaries allow to track yellow object
     lowerBound = np.array([28,100,100])
@@ -133,7 +133,7 @@ while True:
     tEnd=time.time()
     loopTime=tEnd-tStart
 #    print(loopTime)
-    fps=.9*fps + .1*(1/loopTime)
+#    fps=.9*fps + .1*(1/loopTime)
 
 # Stop tracking
 cv.destroyAllWindows()
