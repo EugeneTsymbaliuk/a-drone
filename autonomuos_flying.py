@@ -41,6 +41,7 @@ def armAndtakeoff(alt):
         if vehicle.mode.name != "ALT_HOLD":
             vehicle.mode = VehicleMode("ALT_HOLD")
         rcOverrides(roll, 1500, 1950, yaw)
+        sleep(0.05)
 
 while True:
     # Enable autonomous mode on channel 5
@@ -53,12 +54,14 @@ while True:
             vehicle.mode = VehicleMode("ALT_HOLD")
 #        print("Autonomous flying")
         rcOverrides(roll, pitch, thr, yaw)
+        sleep(0.05)
 
     # Enable manual mode on channel 5
     if vehicle.channels['5'] < 1800:
 #        print("Manual Flying")
         rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
-
+        sleep(0.05)
+        
     # Arm and takeoff on 10 meters on channel 8
 #    if vehicle.channels['8'] > 1800 and BB is None:
 #        BB = 1
