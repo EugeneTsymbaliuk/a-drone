@@ -16,7 +16,8 @@ print("Wait 60 seconds")
 
 # Create the connection to drone
 print('Connecting to FC')
-vehicle = connect('tcp:10.78.28.77:5762')
+vehicle = connect('tcp:192.168.1.145:5762')
+#vehicle = connect('tcp:10.78.28.77:5762')
 #vehicle = connect("/dev/ttyAMA0", baud=115200, wait_ready=True,  timeout=100, rate=15)
 print('Connected to FC')
 
