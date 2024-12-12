@@ -32,10 +32,10 @@ def rcOverrides(roll, pitch, thr, yaw):
     vehicle.channels.overrides = {'1': roll, '2': pitch, '3': thr, '4': yaw}
 
 def armAndtakeoff(alt):
-    while not vehicle.armed:
-        print("Arming vehicle")
-        vehicle.armed = True
-        sleep(1)
+#    while not vehicle.armed:
+#    print("Arming vehicle")
+    vehicle.armed = True
+    sleep(1)
     print("Taking off on " + str(alt) + " meters")
     while vehicle.location.local_frame.down > -alt:
         if vehicle.mode.name != "ALT_HOLD":
@@ -45,6 +45,9 @@ def armAndtakeoff(alt):
 while True:
     # Enable autonomous mode on channel 5
     if vehicle.channels['5'] > 1800:
+        if not vehicle.armed:
+            armAndtakeoff(10)
+            sleep(0.2)
         # Enable stabilize mode
         if vehicle.mode != "ALT_HOLD":
             vehicle.mode = VehicleMode("ALT_HOLD")
@@ -57,13 +60,13 @@ while True:
         rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
 
     # Arm and takeoff on 10 meters on channel 8
-    if vehicle.channels['8'] > 1800 and BB is None:
-        BB = 1 
-        armAndtakeoff(10)
-        sleep(0.2)
+#    if vehicle.channels['8'] > 1800 and BB is None:
+#        BB = 1
+#        armAndtakeoff(10)
+#        sleep(0.2)
     # Enable Landing mode
-    if vehicle.channels['8'] < 1800 and BB is not None:
-        if vehicle.armed:
-            print("Landing")
-            vehicle.mode = VehicleMode("LAND")
-            sleep(0.1)
+#    if vehicle.channels['8'] < 1800 and BB is not None:
+#        if vehicle.armed:
+#            print("Landing")
+#            vehicle.mode = VehicleMode("LAND")
+#            sleep(0.1)
