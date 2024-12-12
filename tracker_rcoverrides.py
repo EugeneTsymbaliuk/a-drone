@@ -95,7 +95,7 @@ def trackTarget(frame):
     return success, frame
 
 while True:
-    tStart = time()
+#    tStart = time()
     frame = picam2.capture_array()
     frame = cv.flip(frame, -1)
 
@@ -118,7 +118,7 @@ while True:
         
 
     cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
-    cv.putText(frame, str(int(fps))+' FPS', (5,70), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+#    cv.putText(frame, str(int(fps))+' FPS', (5,70), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
     cv.imshow("Frame", frame)
     key = cv.waitKey(1) & 0xFF
     
@@ -154,10 +154,10 @@ while True:
             break
 
     # FPS count
-    tEnd=time()
-    loopTime=tEnd-tStart
+#    tEnd=time()
+#    loopTime=tEnd-tStart
 #    print(loopTime)
-    fps=.9*fps + .1*(1/loopTime)
+#    fps=.9*fps + .1*(1/loopTime)
 
 # Stop tracking
 cv.destroyAllWindows()
