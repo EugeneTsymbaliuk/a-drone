@@ -8,6 +8,15 @@ AUX5 in position up enables autonomous flying mode. AUX5 down anables stabilize 
 from dronekit import connect, VehicleMode
 from time import sleep
 
+# Channels1-4 values
+thr = 1700
+yaw = 1500
+roll = 1500
+pitch = 1200
+
+# Bounding Box
+BB = None
+
 # Wait 60 seconds
 print("Wait 60 seconds")
 sleep(60)
@@ -31,7 +40,7 @@ def armAndtakeoff(alt):
     while vehicle.location.local_frame.down > -alt:
         if vehicle.mode.name != "ALT_HOLD":
             vehicle.mode = VehicleMode("ALT_HOLD")
-        rcOverrides(1500, 1500, 1950, 1500)
+        rcOverrides(roll, 1500, 1950, yaw)
 
 while True:
     # Enable autonomous mode on channel 5
@@ -40,20 +49,20 @@ while True:
         if vehicle.mode != "ALT_HOLD":
             vehicle.mode = VehicleMode("ALT_HOLD")
 #        print("Autonomous flying")
-        rcOverrides(1500, 1200, 1700, 1500)
+        rcOverrides(roll, pitch, thr, yaw)
 
     # Enable manual mode on channel 5
     if vehicle.channels['5'] < 1800:
-        if vehicle.armed:
-#            print("Manual Flying")
-            rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
+#        print("Manual Flying")
+        rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
 
-    # Arm and takeoff on 10 meters on channel 6
-    if vehicle.channels['6'] > 1800:
+    # Arm and takeoff on 10 meters on channel 8
+    if vehicle.channels['8'] > 1800 and BB is None:
+        BB = 1 
         armAndtakeoff(10)
-    
+        sleep(0.2)
     # Enable Landing mode
-    if vehicle.channels['6'] < 1800:
+    if vehicle.channels['8'] < 1800 and BB is not None:
         if vehicle.armed:
             print("Landing")
             vehicle.mode = VehicleMode("LAND")
