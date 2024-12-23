@@ -33,7 +33,7 @@ chans = []
 
 # Wait 60 seconds
 print("Wait 30 seconds")
-#sleep(30)
+sleep(30)
 
 # Create picamera instance
 picam2 = Picamera2()
