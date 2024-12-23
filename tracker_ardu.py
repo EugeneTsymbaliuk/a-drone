@@ -4,6 +4,7 @@ import serial
 import argparse
 import cv2 as cv
 import numpy as np
+import pyautogui 
 from picamera2 import Picamera2
 from dronekit import connect, VehicleMode
 from time import time, sleep
@@ -270,7 +271,10 @@ while True:
 #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
         pass
 
+    cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
+    cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
     cv.imshow("Frame", frame)
+    pyautogui.moveTo(dispW // 2, dispH - 1)
 
     # Close video window
     if key == ord("q"):
