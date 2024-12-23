@@ -141,13 +141,13 @@ def trackTarget(frame, arm_check):
                 ser.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and -20 < roll_error < 20:
 #                print("Down")
-                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr-100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr-50, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error < -5 and -20 < roll_error < 20:
 #                print("Up")
                 ser.write(channelsCrsfToChannelsPacket([992, pitch, thr+100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error > 20:
 #                print("Right and Down")
-                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr-100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr-50, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error < -5:
 #                print("Right and Up")
                 ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr+100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
@@ -156,7 +156,7 @@ def trackTarget(frame, arm_check):
                 ser.write(channelsCrsfToChannelsPacket([792, pitch, thr+100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and roll_error < -20:
 #                print("Left and Down")
-                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr-100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr-50, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if -20 < roll_error < 20 and -5 < pitch_error < 20:
                 print("Fly forward")
                 ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))

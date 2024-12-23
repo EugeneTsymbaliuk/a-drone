@@ -31,10 +31,10 @@ RC_CHANNELS_PACKED = 0x16
 chans = []
 
 # Channels1-4 values
-thr = 1500
+#thr = 1500
 yaw = 1500
 roll = 1500
-pitch = 1200
+#pitch = 1200
 
 # Wait 60 seconds
 print("Wait 60 seconds")
@@ -156,22 +156,22 @@ def trackTarget(frame):
             rcOverrides(1400, pitch, thr, 1450)
         if pitch_error > 20 and -20 < roll_error < 20:
             print("Down")
-            rcOverrides(roll, pitch, 1300, yaw)
+            rcOverrides(roll, pitch, thr-50, yaw)
         if pitch_error < -5 and -20 < roll_error < 20:
             print("Up")
-            rcOverrides(roll, pitch, 1700, yaw)
+            rcOverrides(roll, pitch, thr+100, yaw)
         if roll_error > 20 and pitch_error > 20:
             print("Right and Down")
-            rcOverrides(1600, pitch, 1300, 1550)
+            rcOverrides(1600, pitch, thr-50, 1550)
         if roll_error > 20 and pitch_error < -5:
             print("Right and Up")
-            rcOverrides(1600, pitch, 1700, 1550)
+            rcOverrides(1600, pitch, thr+100, 1550)
         if roll_error < -20 and pitch_error < -5:
             print("Left and Up")
-            rcOverrides(1400, pitch, 1700, 1450)
+            rcOverrides(1400, pitch, thr+100, 1450)
         if pitch_error > 20 and roll_error < -20:
             print("Left and Down")
-            rcOverrides(1400, pitch, 1300, 1450)
+            rcOverrides(1400, pitch, thr-50, 1450)
         if -20 < roll_error < 20 and -5 < pitch_error < 20:
             print("Fly forward")
             rcOverrides(roll, pitch, thr, yaw)
@@ -256,6 +256,8 @@ while True:
     try:
 #        if key == ord("c"):
         if chans[4] > 1600 and BB is None:
+            pitch = chans[1]
+            thr = chans[2]
             BB = (x-25, y-25, 50, 50)
             tracker.init(frame, BB)
 
