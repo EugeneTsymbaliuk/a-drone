@@ -30,13 +30,8 @@ RC_CHANNELS_PACKED = 0x16
 chans = []
 
 # Wait 60 seconds
-print("Wait 60 seconds")
-#sleep(60)
-
-# Create the connection to drone
-print('Connecting to FC')
-#vehicle = connect("/dev/ttyAMA0", baud=57600, wait_ready=True,  timeout=100, rate=40)
-print('Connected to FC')
+print("Wait 30 seconds")
+sleep(30)
 
 # Create picamera instance
 picam2 = Picamera2()
