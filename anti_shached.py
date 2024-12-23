@@ -127,7 +127,7 @@ def merge_roi(frame, roi, x, y):
     frame[y:y+roi_size, x:x+roi_size, :] = roi
     return frame
 
-def trackTarget(frame, contours):
+def trackTarget(frame, contours, arm_check):
     try:
         cv.putText(frame, "Tracking Enabled", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
         contours = sorted(contours, key=lambda x:cv.contourArea(x), reverse=True)
@@ -137,33 +137,34 @@ def trackTarget(frame, contours):
         cv.rectangle(frame,(x,y), (x+w,y+h), (0,0,255), 3)
         roll_error = (x + w/2) - dispW/2
         pitch_error = (y + h/2) - dispH/2
-        if roll_error > 20 and -20 < pitch_error < 20:
-            print("Right")
-            ser.write(channelsCrsfToChannelsPacket([1192, 1292, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if roll_error < -20 and -20 < pitch_error < 20:
-            print("Left")
-            ser.write(channelsCrsfToChannelsPacket([792, 1292, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if pitch_error > 20 and -20 < roll_error < 20:
-            print("Down")
-            ser.write(channelsCrsfToChannelsPacket([992, 1292, thr-100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if pitch_error < -5 and -20 < roll_error < 20:
-            print("Up")
-            ser.write(channelsCrsfToChannelsPacket([992, 1292, thr+100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if roll_error > 20 and pitch_error > 20:
-            print("Right and Down")
-            ser.write(channelsCrsfToChannelsPacket([1192, 1292, thr-100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if roll_error > 20 and pitch_error < -5:
-            print("Right and Up")
-            ser.write(channelsCrsfToChannelsPacket([1192, 1292, thr+100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if roll_error < -20 and pitch_error < -5:
-            print("Left and Up")
-            ser.write(channelsCrsfToChannelsPacket([792, 1292, thr+100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if pitch_error > 20 and roll_error < -20:
-            print("Left and Down")
-            ser.write(channelsCrsfToChannelsPacket([792, 1292, thr-100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-        if -20 < roll_error < 20 and -5 < pitch_error < 20:
-            print("Fly forward")
-            ser.write(channelsCrsfToChannelsPacket([992, 1292, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+        if arm_check > 1700:
+            if roll_error > 20 and -20 < pitch_error < 20:
+                print("Right")
+                ser.write(channelsCrsfToChannelsPacket([1192, 1292, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if roll_error < -20 and -20 < pitch_error < 20:
+                print("Left")
+                ser.write(channelsCrsfToChannelsPacket([792, 1292, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if pitch_error > 20 and -20 < roll_error < 20:
+                print("Down")
+                ser.write(channelsCrsfToChannelsPacket([992, 1292, thr-100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if pitch_error < -5 and -20 < roll_error < 20:
+                print("Up")
+                ser.write(channelsCrsfToChannelsPacket([992, 1292, thr+100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if roll_error > 20 and pitch_error > 20:
+                print("Right and Down")
+                ser.write(channelsCrsfToChannelsPacket([1192, 1292, thr-100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if roll_error > 20 and pitch_error < -5:
+                print("Right and Up")
+                ser.write(channelsCrsfToChannelsPacket([1192, 1292, thr+100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if roll_error < -20 and pitch_error < -5:
+                print("Left and Up")
+                ser.write(channelsCrsfToChannelsPacket([792, 1292, thr+100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if pitch_error > 20 and roll_error < -20:
+                print("Left and Down")
+                ser.write(channelsCrsfToChannelsPacket([792, 1292, thr-100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            if -20 < roll_error < 20 and -5 < pitch_error < 20:
+                print("Fly forward")
+                ser.write(channelsCrsfToChannelsPacket([992, 1292, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
     except IndexError:
         print("No Tracking")        
@@ -218,11 +219,11 @@ args = parser.parse_args()
 Thread(target=openSerial).start()
 
 while True:
-    tStart = time()
+#    tStart = time()
     frame = picam2.capture_array()
     frame = cv.flip(frame, -1)
     frameHSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-    cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+#    cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
     # This boundaries allow to track yellow object
     lowerBound = np.array([28,100,100])
@@ -243,9 +244,9 @@ while True:
     
     # Target tracked object
     if BB is not None:
-        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
         with serial.Serial(args.port1, args.baud, timeout=2) as ser:
-            trackTarget(frame, contours) # Track object
+            trackTarget(frame, contours, chans[4]) # Track object
 
     if BB is None:
         cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
@@ -255,10 +256,7 @@ while True:
     try:
 #        if key == ord("c"):
         if chans[5] > 1600 and BB is None:
-#            pitch = chans[1]
-#            thr = chans[2]
             BB = 1
-#            tracker.init(frame, BB)
     
 #       if key == ord("v"):
         if chans[5] < 1600 and BB is not None:
@@ -268,19 +266,6 @@ while True:
         cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
         pass
-
-#    if key == ord("c"):
-#    if vehicle.channels['5'] > 1800 and BB is None:
-#        BB = 1
-        # Enable stabilize mode
-#        if vehicle.mode != "STABILIZE":
-#            vehicle.mode = VehicleMode("STABILIZE")
-        
-    # Disable targeting tracked object
-#    if key == ord("v"):
-#    if vehicle.channels['5'] < 1800:
-#        BB = None
-#        rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
 
     # Launch window from camera
     cv.imshow("Camera", frame)
@@ -290,68 +275,6 @@ while True:
         break
 
     # Count time
-    tEnd=time()
-    loopTime=tEnd-tStart
-#    print(loopTime)
-    fps=.9*fps + .1*(1/loopTime)
-
-# Stop tracking
-cv.destroyAllWindows()
-
-'''
-while True:
-#    tStart = time()
-    frame = picam2.capture_array()
-    frame = cv.flip(frame, -1)
-
-    # Crop a region of interest (ROI) from the frame
-    roi = frame[y-25:y+25, x-25:x+25]
-
-    # Draw rectangle in the center. For 640x480 resolution
-    cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
-
-    # Resize the ROI to a specific size (e.g., 200x200)
-    roi_resized = cv.resize(roi, (roi_size, roi_size))
-
-    # Merge the resized ROI back into the frame
-    frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
-
-    if BB is not None:
-        cv.putText(frame, "Tracking Enabled", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-        with serial.Serial(args.port1, args.baud, timeout=2) as ser:
-            success, frame = trackTarget(frame) # Track object
-
-    if BB is None:
-        cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-
-    key = cv.waitKey(1) & 0xFF
-
-    try:
-#        if key == ord("c"):
-        if chans[5] > 1600 and BB is None:
-            pitch = chans[1]
-            thr = chans[2]
-            BB = (x-25, y-25, 50, 50)
-            tracker.init(frame, BB)
-    
-#       if key == ord("v"):
-        if chans[5] < 1600 and BB is not None:
-            BB = None
-
-    except IndexError:
-        cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-        pass
-
-    cv.imshow("Frame", frame)
-
-    # Close video window
-    if key == ord("q"):
-            break
-
-    # FPS count
 #    tEnd=time()
 #    loopTime=tEnd-tStart
 #    print(loopTime)
@@ -359,4 +282,3 @@ while True:
 
 # Stop tracking
 cv.destroyAllWindows()
-'''
