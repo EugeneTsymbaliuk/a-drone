@@ -160,7 +160,10 @@ def trackTarget(frame, arm_check):
             if -20 < roll_error < 20 and -5 < pitch_error < 20:
                 print("Fly forward")
                 ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-
+    else:
+        print("Target is lost!")
+        ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+    
     return success, frame
 
 def openSerial():
