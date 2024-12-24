@@ -184,6 +184,7 @@ def trackTarget(frame):
             print(thr)
 
     return success, frame
+
 def pwmCalc(crsf_value):
     pwm = 1500 + (0.625 * (crsf_value - 992))
     return int(pwm)
