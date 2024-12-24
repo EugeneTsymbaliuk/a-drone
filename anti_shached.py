@@ -216,69 +216,73 @@ parser.add_argument('-p1', '--port1', default='/dev/ttyAMA1', required=False)
 parser.add_argument('-b', '--baud', default=420000, required=False)
 args = parser.parse_args()
 
-Thread(target=openSerial).start()
 
-while True:
-#    tStart = time()
-    frame = picam2.capture_array()
-    frame = cv.flip(frame, -1)
-    frameHSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-#    cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+if __name__ == "__main__":
 
-    # This boundaries allow to track yellow object
-    lowerBound = np.array([28,100,100])
-    upperBound = np.array([36,255,255])
-    myMask = cv.inRange(frameHSV, lowerBound, upperBound)
-    contours, junk = cv.findContours(myMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-    
-    # Activate keyboard for pressing keys
-    key = cv.waitKey(1) & 0xFF
+    # Start serial connection with RX
+    Thread(target=openSerial).start()
 
-    # Track object with green square    
-    if len(contours) > 0 and BB is None:
-        contours = sorted(contours, key=lambda x:cv.contourArea(x), reverse=True)
-        cv.drawContours(frame,contours,-1,(255,0,0),3)
-        contour = contours[0]
-        x,y,w,h = cv.boundingRect(contour)
-        cv.rectangle(frame,(x,y), (x+w,y+h), (0,255,0), 3)
-    
-    # Target tracked object
-    if BB is not None:
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-        with serial.Serial(args.port1, args.baud, timeout=2) as ser:
-            trackTarget(frame, contours, chans[4]) # Track object
+    while True:
+    #    tStart = time()
+        frame = picam2.capture_array()
+        frame = cv.flip(frame, -1)
+        frameHSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+    #    cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
-    if BB is None:
-        cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+        # This boundaries allow to track yellow object
+        lowerBound = np.array([28,100,100])
+        upperBound = np.array([36,255,255])
+        myMask = cv.inRange(frameHSV, lowerBound, upperBound)
+        contours, junk = cv.findContours(myMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        
+        # Activate keyboard for pressing keys
+        key = cv.waitKey(1) & 0xFF
 
-    # Enable targeting tracked object  
-    try:
-#        if key == ord("c"):
-        if chans[5] > 1600 and BB is None:
-            BB = 1
-    
-#       if key == ord("v"):
-        if chans[5] < 1600 and BB is not None:
-            BB = None
+        # Track object with green square    
+        if len(contours) > 0 and BB is None:
+            contours = sorted(contours, key=lambda x:cv.contourArea(x), reverse=True)
+            cv.drawContours(frame,contours,-1,(255,0,0),3)
+            contour = contours[0]
+            x,y,w,h = cv.boundingRect(contour)
+            cv.rectangle(frame,(x,y), (x+w,y+h), (0,255,0), 3)
+        
+        # Target tracked object
+        if BB is not None:
+    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            with serial.Serial(args.port1, args.baud, timeout=2) as ser:
+                trackTarget(frame, contours, chans[4]) # Track object
 
-    except IndexError:
-        cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-        pass
+        if BB is None:
+            cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
-    # Launch window from camera
-    cv.imshow("Camera", frame)
+        # Enable targeting tracked object  
+        try:
+    #        if key == ord("c"):
+            if chans[5] > 1600 and BB is None:
+                BB = 1
+        
+    #       if key == ord("v"):
+            if chans[5] < 1600 and BB is not None:
+                BB = None
 
-    # Close window form camera
-    if cv.waitKey(1)==ord('q'):
-        break
+        except IndexError:
+            cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
+    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            pass
 
-    # Count time
-#    tEnd=time()
-#    loopTime=tEnd-tStart
-#    print(loopTime)
-#    fps=.9*fps + .1*(1/loopTime)
+        # Launch window from camera
+        cv.imshow("Camera", frame)
 
-# Stop tracking
-cv.destroyAllWindows()
+        # Close window form camera
+        if cv.waitKey(1)==ord('q'):
+            break
+
+        # Count time
+    #    tEnd=time()
+    #    loopTime=tEnd-tStart
+    #    print(loopTime)
+    #    fps=.9*fps + .1*(1/loopTime)
+
+    # Stop tracking
+    cv.destroyAllWindows()
