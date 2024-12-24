@@ -223,64 +223,65 @@ args = parser.parse_args()
 
 Thread(target=openSerial).start()
 
-while True:
-#    tStart = time()
-    frame = picam2.capture_array()
-    frame = cv.flip(frame, -1)
+if __name__ == "__main__":
+    while True:
+    #    tStart = time()
+        frame = picam2.capture_array()
+        frame = cv.flip(frame, -1)
 
-    # Crop a region of interest (ROI) from the frame
-    roi = frame[y-25:y+25, x-25:x+25]
+        # Crop a region of interest (ROI) from the frame
+        roi = frame[y-25:y+25, x-25:x+25]
 
-    # Draw rectangle in the center. For 640x480 resolution
-    cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
+        # Draw rectangle in the center. For 640x480 resolution
+        cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
 
-    # Resize the ROI to a specific size (e.g., 200x200)
-    roi_resized = cv.resize(roi, (roi_size, roi_size))
+        # Resize the ROI to a specific size (e.g., 200x200)
+        roi_resized = cv.resize(roi, (roi_size, roi_size))
 
-    # Merge the resized ROI back into the frame
-    frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
+        # Merge the resized ROI back into the frame
+        frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
 
-    if BB is not None:
-        cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-        success, frame = trackTarget(frame) # Track object
+        if BB is not None:
+            cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
+    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            success, frame = trackTarget(frame) # Track object
 
-    if BB is None:
-        cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+        if BB is None:
+            cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
-    key = cv.waitKey(1) & 0xFF
+        key = cv.waitKey(1) & 0xFF
 
-    try:
-#        if key == ord("c"):
-        if chans[4] > 1600 and BB is None:
-            pitch = chans[1]
-            thr = chans[2]
-            BB = (x-25, y-25, 50, 50)
-            tracker.init(frame, BB)
+        try:
+    #        if key == ord("c"):
+            if chans[4] > 1600 and BB is None:
+                pitch = chans[1]
+                thr = chans[2]
+                BB = (x-25, y-25, 50, 50)
+                tracker.init(frame, BB)
 
-#       if key == ord("v"):
-        if chans[4] < 1600 and BB is not None:
-            BB = None
+    #       if key == ord("v"):
+            if chans[4] < 1600 and BB is not None:
+                BB = None
 
-    except IndexError:
-        cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-#        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-        pass
+        except IndexError:
+            cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
+    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            pass
 
-    cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
-    cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
-    cv.imshow("Frame", frame)
+        cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
+        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
+        cv.imshow("Frame", frame)
 
-    # Close video window
-    if key == ord("q"):
-            break
+        # Close video window
+        if key == ord("q"):
+                break
 
-    # FPS count
-#    tEnd=time()
-#    loopTime=tEnd-tStart
-#    print(loopTime)
-#    fps=.9*fps + .1*(1/loopTime)
+        # FPS count
+    #    tEnd=time()
+    #    loopTime=tEnd-tStart
+    #    print(loopTime)
+    #    fps=.9*fps + .1*(1/loopTime)
 
-# Stop tracking
-cv.destroyAllWindows()
+    # Stop tracking
+    cv.destroyAllWindows()
