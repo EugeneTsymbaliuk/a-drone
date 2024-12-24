@@ -4,7 +4,6 @@ import serial
 import argparse
 import cv2 as cv
 import numpy as np
-import pyautogui 
 from picamera2 import Picamera2
 from dronekit import connect, VehicleMode
 from time import time, sleep
@@ -32,10 +31,8 @@ RC_CHANNELS_PACKED = 0x16
 chans = []
 
 # Channels1-4 values
-#thr = 1500
 yaw = 1500
 roll = 1500
-#pitch = 1200
 
 # Wait 60 seconds
 print("Wait 60 seconds")
@@ -244,7 +241,7 @@ while True:
     frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
 
     if BB is not None:
-        cv.putText(frame, "Tracking Enabled", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
+        cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
         success, frame = trackTarget(frame) # Track object
 
@@ -274,7 +271,6 @@ while True:
     cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
     cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
     cv.imshow("Frame", frame)
-    pyautogui.moveTo(dispW // 2, dispH - 1)
 
     # Close video window
     if key == ord("q"):
