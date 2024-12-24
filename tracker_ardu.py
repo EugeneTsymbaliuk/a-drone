@@ -147,31 +147,31 @@ def trackTarget(frame):
         roll_error = (x + w/2) - dispW/2
         pitch_error = (y + h/2) - dispH/2
         if roll_error > 20 and -20 < pitch_error < 20:
-            print("Right")
+#            print("Right")
             rcOverrides(1600, pitch, thr, 1550)
         if roll_error < -20 and -20 < pitch_error < 20:
-            print("Left")
+#            print("Left")
             rcOverrides(1400, pitch, thr, 1450)
         if pitch_error > 20 and -20 < roll_error < 20:
-            print("Down")
+#            print("Down")
             rcOverrides(roll, pitch, thr-50, yaw)
         if pitch_error < -5 and -20 < roll_error < 20:
-            print("Up")
+#            print("Up")
             rcOverrides(roll, pitch, thr+100, yaw)
         if roll_error > 20 and pitch_error > 20:
-            print("Right and Down")
+#            print("Right and Down")
             rcOverrides(1600, pitch, thr-50, 1550)
         if roll_error > 20 and pitch_error < -5:
-            print("Right and Up")
+#            print("Right and Up")
             rcOverrides(1600, pitch, thr+100, 1550)
         if roll_error < -20 and pitch_error < -5:
-            print("Left and Up")
+#            print("Left and Up")
             rcOverrides(1400, pitch, thr+100, 1450)
         if pitch_error > 20 and roll_error < -20:
-            print("Left and Down")
+#            print("Left and Down")
             rcOverrides(1400, pitch, thr-50, 1450)
         if -20 < roll_error < 20 and -5 < pitch_error < 20:
-            print("Fly forward")
+#            print("Fly forward")
             rcOverrides(roll, pitch, thr, yaw)
 
     return success, frame
