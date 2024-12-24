@@ -205,10 +205,11 @@ parser.add_argument('-p1', '--port1', default='/dev/ttyAMA1', required=False)
 parser.add_argument('-b', '--baud', default=420000, required=False)
 args = parser.parse_args()
 
-# Start serial connection with RX 
-Thread(target=openSerial).start()
-
 if __name__ == "__main__":
+
+    # Start serial connection with RX 
+    Thread(target=openSerial).start()
+
     while True:
 #        tStart = time()
         frame = picam2.capture_array()
