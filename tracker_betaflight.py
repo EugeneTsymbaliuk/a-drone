@@ -252,7 +252,9 @@ while True:
         cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
         pass
-
+    
+    cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
+    cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
     cv.imshow("Frame", frame)
 
     # Close video window
