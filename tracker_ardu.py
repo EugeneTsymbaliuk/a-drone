@@ -182,7 +182,10 @@ def trackTarget(frame):
 #            print("Fly forward")
             rcOverrides(roll, pitch, thr, yaw)
             print(thr)
-
+    else:
+        print("Target is lost!")
+        rcOverrides(roll, pitch, thr, yaw)
+      
     return success, frame
 
 def pwmCalc(crsf_value):
