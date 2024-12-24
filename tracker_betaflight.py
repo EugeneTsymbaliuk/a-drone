@@ -31,7 +31,7 @@ chans = []
 
 # Wait 30 seconds
 print("Wait 30 seconds")
-sleep(30)
+#sleep(30)
 
 # Create picamera instance
 picam2 = Picamera2()
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     Thread(target=openSerial).start()
 
     while True:
-#        tStart = time()
+        tStart = time()
         frame = picam2.capture_array()
         frame = cv.flip(frame, -1)
 
@@ -229,13 +229,13 @@ if __name__ == "__main__":
 
         if BB is not None:
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-#            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             with serial.Serial(args.port1, args.baud, timeout=2) as ser:
                 success, frame = trackTarget(frame, chans[4]) # Track object
 
         if BB is None:
             cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
-#            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
         key = cv.waitKey(1) & 0xFF
 
@@ -253,7 +253,7 @@ if __name__ == "__main__":
 
         except IndexError:
             cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             pass
 
         cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
@@ -265,10 +265,10 @@ if __name__ == "__main__":
                 break
 
         # FPS count
-    #    tEnd=time()
-    #    loopTime=tEnd-tStart
+        tEnd=time()
+        loopTime=tEnd-tStart
     #    print(loopTime)
-    #    fps=.9*fps + .1*(1/loopTime)
+        fps=.9*fps + .1*(1/loopTime)
 
     # Stop tracking
     cv.destroyAllWindows()
