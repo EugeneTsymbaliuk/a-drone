@@ -33,17 +33,17 @@ chans = []
 # Channels values
 yaw = 1500
 roll = 1500
-pitch = 1700
+pitch = 1800
 thr = 1650
 
 # Wait 60 seconds
 print("Wait 60 seconds")
-#sleep(60)
+sleep(60)
 
 # Create the connection to drone
 print('Connecting to FC')
-vehicle = connect('tcp:192.168.1.145:5762', rate=40)
-#vehicle = connect("/dev/ttyAMA1", baud=57600, wait_ready=True,  timeout=100, rate=40)
+#vehicle = connect('tcp:192.168.1.145:5762', rate=40)
+vehicle = connect("/dev/ttyAMA1", baud=57600, wait_ready=True,  timeout=100, rate=40)
 print('Connected to FC')
 
 # Create picamera instance
@@ -145,45 +145,6 @@ def merge_roi(frame, roi, x, y):
     frame[y:y+roi_size, x:x+roi_size, :] = roi
     return frame
 
-'''
-def trackTarget(frame):
-    (success, box) = tracker.update(frame)
-    if success:
-        (x, y, w, h) = [int(v) for v in box]
-        cv.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
-        roll_error = (x + w/2) - dispW/2
-        pitch_error = (y + h/2) - dispH/2
-        if roll_error > 20 and -20 < pitch_error < 20:
-#            print("Right")
-            rcOverrides(1600, pitch, thr, 1550)
-        if roll_error < -20 and -20 < pitch_error < 20:
-#            print("Left")
-            rcOverrides(1400, pitch, thr, 1450)
-        if pitch_error > 20 and -20 < roll_error < 20:
-#            print("Down")
-            rcOverrides(roll, pitch, thr-50, yaw)
-        if pitch_error < -5 and -20 < roll_error < 20:
-#            print("Up")
-            rcOverrides(roll, pitch, thr+100, yaw)
-        if roll_error > 20 and pitch_error > 20:
-#            print("Right and Down")
-            rcOverrides(1600, pitch, thr-50, 1550)
-        if roll_error > 20 and pitch_error < -5:
-#            print("Right and Up")
-            rcOverrides(1600, pitch, thr+100, 1550)
-        if roll_error < -20 and pitch_error < -5:
-#            print("Left and Up")
-            rcOverrides(1400, pitch, thr+100, 1450)
-        if pitch_error > 20 and roll_error < -20:
-#            print("Left and Down")
-            rcOverrides(1400, pitch, thr-50, 1450)
-        if -20 < roll_error < 20 and -5 < pitch_error < 20:
-#            print("Fly forward")
-            rcOverrides(roll, pitch, thr, yaw)
-
-    return success, frame
-'''
-
 def pwmCalc(crsf_value):
     pwm = 1500 + (0.625 * (crsf_value - 992))
     return int(pwm)
@@ -244,10 +205,6 @@ if __name__ == "__main__":
         key = cv.waitKey(1) & 0xFF
 
         if SW is not None:
-#            frame[0:int(dispH/2), int(dispW/1.5):] = [60,100,100]
-#            frame[:int(dispH/2), :int(dispW/3)] = [60,100,100]
-#            frame[int(dispH/2):, :int(dispW/2)] = [60,100,100]
-#            frame[int(dispH/2):, int(dispW/2):] = [60,100,100]
             cv.putText(frame, "Autonomous", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,50), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
@@ -277,15 +234,14 @@ if __name__ == "__main__":
                 frame[:int(dispH/2), :int(dispW/3)] = [60,100,100]
                 frame[int(dispH/2):, :int(dispW/2)] = [60,100,100]
                 frame[int(dispH/2):, int(dispW/2):] = [60,100,100]
-                
 
         except IndexError:
             cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
     #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             pass
 
-#        cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
-#        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
+        cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
+        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
         cv.imshow("Frame", frame)
 
         # Close video window
