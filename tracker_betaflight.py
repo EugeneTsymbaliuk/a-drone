@@ -135,40 +135,41 @@ def trackTarget(frame, arm_check):
         if arm_check > 1700:
             if roll_error > 20 and -20 < pitch_error < 20:
 #                print("Right")
-                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and -20 < pitch_error < 20:
 #                print("Left")
-                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and -20 < roll_error < 20:
 #                print("Down")
-                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr-50, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr-50, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error < -5 and -20 < roll_error < 20:
 #                print("Up")
-                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr+100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr+100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error > 20:
 #                print("Right and Down")
-                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr-50, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr-50, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error < -5:
 #                print("Right and Up")
-                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr+100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr+100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and pitch_error < -5:
 #                print("Left and Up")
-                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr+100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr+100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and roll_error < -20:
 #                print("Left and Down")
-                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr-50, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr-50, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if -20 < roll_error < 20 and -5 < pitch_error < 20:
-                print("Fly forward")
-                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+#                print("Fly forward")
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+
     else:
-        print("Target is lost!")
-        ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-    
+#        print("Target is lost!")
+        ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+
     return success, frame
 
 def openSerial():
     print("Open serial port")
-    global chans
+    global chans, ser2
     with serial.Serial(args.port0, args.baud, timeout=2) as ser, serial.Serial(args.port1, args.baud, timeout=2) as ser2:
             input = bytearray()
             while True:
@@ -208,11 +209,10 @@ parser.add_argument('-p1', '--port1', default='/dev/ttyAMA1', required=False)
 parser.add_argument('-b', '--baud', default=420000, required=False)
 args = parser.parse_args()
 
+# Start serial connection with RX 
+Thread(target=openSerial).start()
+
 if __name__ == "__main__":
-
-    # Start serial connection with RX 
-    Thread(target=openSerial).start()
-
     while True:
 #        tStart = time()
         frame = picam2.capture_array()
@@ -233,8 +233,7 @@ if __name__ == "__main__":
         if BB is not None:
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-            with serial.Serial(args.port1, args.baud, timeout=2) as ser:
-                success, frame = trackTarget(frame, chans[4]) # Track object
+            success, frame = trackTarget(frame, chans[4]) # Track object
 
         if BB is None:
             cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
@@ -243,20 +242,18 @@ if __name__ == "__main__":
         key = cv.waitKey(1) & 0xFF
 
         try:
-#            if key == ord("c"):
             if chans[5] > 1600 and BB is None:
                 pitch = chans[1]
                 thr = chans[2]
                 BB = (x-25, y-25, 50, 50)
                 tracker.init(frame, BB)
     
-    #       if key == ord("v"):
             if chans[5] < 1600 and BB is not None:
                 BB = None
 
         except IndexError:
             cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-    #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+#            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             pass
 
         cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
@@ -268,10 +265,10 @@ if __name__ == "__main__":
                 break
 
         # FPS count
-    #    tEnd=time()
-    #    loopTime=tEnd-tStart
-    #    print(loopTime)
-    #    fps=.9*fps + .1*(1/loopTime)
+#        tEnd=time()
+#        loopTime=tEnd-tStart
+#        print(loopTime)
+#        fps=.9*fps + .1*(1/loopTime)
 
     # Stop tracking
     cv.destroyAllWindows()
