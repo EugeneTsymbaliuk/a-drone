@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""
+Check CPU Serial Number. 
+cat /proc/cpuinfo
+"""
+
 import serial
 import argparse
 from time import time, sleep
@@ -24,8 +29,7 @@ fps=0
 
 # Bounding Box
 BB = None
-skey = 10991099
-
+sskey = '100000001daa5c9b'
 CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
 chans = []
@@ -35,6 +39,7 @@ print("Wait 30 seconds")
 sleep(30)
 
 # Create picamera instance
+
 picam2 = Picamera2()
 
 # Video Settings
@@ -47,6 +52,13 @@ picam2.start()
 
 # Object tracker
 tracker = cv.TrackerCSRT_create() # Initialize tracker with CSRT algorithm
+
+def sinfo():
+    global skey
+    f = open('/proc/cpuinfo','r')
+    for l in f:
+        if l.startswith('Serial'):
+            skey = l[-17:].strip()
 
 def crc8_dvb_s2(crc, a) -> int:
   crc = crc ^ a
@@ -142,22 +154,22 @@ def trackTarget(frame, arm_check):
                 ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and -20 < roll_error < 20:
 #                print("Down")
-                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr-100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr-150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error < -5 and -20 < roll_error < 20:
 #                print("Up")
-                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr+100, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr+150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error > 20:
 #                print("Right and Down")
-                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr-100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr-150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error < -5:
 #                print("Right and Up")
-                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr+100, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr+150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and pitch_error < -5:
 #                print("Left and Up")
-                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr+100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr+150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and roll_error < -20:
 #                print("Left and Down")
-                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr-100, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr-150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if -20 < roll_error < 20 and -5 < pitch_error < 20:
 #                print("Fly forward")
                 ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
@@ -214,6 +226,7 @@ args = parser.parse_args()
 Thread(target=openSerial).start()
 
 def startCam():
+    sinfo()
     global BB, fps, pitch, thr
     while True:
 #        tStart = time()
@@ -232,7 +245,7 @@ def startCam():
         # Merge the resized ROI back into the frame
         frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
 
-        if BB is not None and skey == 10991099:
+        if BB is not None and skey == sskey:
 #        if BB is not None:
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
