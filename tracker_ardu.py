@@ -25,12 +25,13 @@ fps=0
 
 # Bounding Box
 BB = None
+skey = 10991099
 
 CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
 chans = []
 
-# Channels1-4 values
+# Channels values
 yaw = 1500
 roll = 1500
 
@@ -147,45 +148,33 @@ def trackTarget(frame):
         roll_error = (x + w/2) - dispW/2
         pitch_error = (y + h/2) - dispH/2
         if roll_error > 20 and -20 < pitch_error < 20:
-            print(thr)
 #            print("Right")
             rcOverrides(1600, pitch, thr, 1550)
         if roll_error < -20 and -20 < pitch_error < 20:
 #            print("Left")
             rcOverrides(1400, pitch, thr, 1450)
-            print(thr)
         if pitch_error > 20 and -20 < roll_error < 20:
 #            print("Down")
             rcOverrides(roll, pitch, thr-50, yaw)
-            print(thr-50)
         if pitch_error < -5 and -20 < roll_error < 20:
 #            print("Up")
             rcOverrides(roll, pitch, thr+100, yaw)
-            print(thr+100)
         if roll_error > 20 and pitch_error > 20:
 #            print("Right and Down")
             rcOverrides(1600, pitch, thr-50, 1550)
-            print(thr-50)
         if roll_error > 20 and pitch_error < -5:
 #            print("Right and Up")
             rcOverrides(1600, pitch, thr+100, 1550)
-            print(thr+100)
         if roll_error < -20 and pitch_error < -5:
 #            print("Left and Up")
             rcOverrides(1400, pitch, thr+100, 1450)
-            print(thr+100)
         if pitch_error > 20 and roll_error < -20:
 #            print("Left and Down")
             rcOverrides(1400, pitch, thr-50, 1450)
-            print(thr-50)
         if -20 < roll_error < 20 and -5 < pitch_error < 20:
 #            print("Fly forward")
             rcOverrides(roll, pitch, thr, yaw)
-            print(thr)
-    else:
-        print("Target is lost!")
-        rcOverrides(roll, pitch, thr, yaw)
-      
+
     return success, frame
 
 def pwmCalc(crsf_value):
@@ -234,11 +223,12 @@ parser.add_argument('-p0', '--port0', default='/dev/ttyAMA0', required=False)
 parser.add_argument('-b', '--baud', default=420000, required=False)
 args = parser.parse_args()
 
-if __name__ == "__main__":
+# Start serial connection with RX
+Thread(target=openSerial).start()
 
-    # Start serial connection with RX
-    Thread(target=openSerial).start()
-  
+def startCam():
+    global BB, fps, pitch, thr
+
     while True:
     #    tStart = time()
         frame = picam2.capture_array()
@@ -256,7 +246,7 @@ if __name__ == "__main__":
         # Merge the resized ROI back into the frame
         frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
 
-        if BB is not None:
+        if BB is not None and skey == 10991099:
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
     #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             success, frame = trackTarget(frame) # Track object
@@ -300,3 +290,6 @@ if __name__ == "__main__":
 
     # Stop tracking
     cv.destroyAllWindows()
+
+if __name__ == "__main__":
+    startCam()

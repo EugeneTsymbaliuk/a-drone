@@ -24,6 +24,7 @@ fps=0
 
 # Bounding Box
 BB = None
+skey = 10991099
 
 CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
@@ -91,13 +92,13 @@ def packCrsfToBytes(channels) -> bytes:
         # Next dest should be shifted up by the bits consumed
         destShift = srcBitsLeft
 
-    return result
+    return bytes(result)
 
 def channelsCrsfToChannelsPacket(channels) -> bytes:
     result = bytearray([CRSF_SYNC, 24, RC_CHANNELS_PACKED]) # 24 is packet length
     result += packCrsfToBytes(channels)
     result.append(crc8_data(result[2:]))
-    return result
+    return bytes(result)
 
 def unpackChannels(payload, dest, data):
     num_of_channels = 16
@@ -201,7 +202,7 @@ def openSerial():
                                         ser2.write(channelsCrsfToChannelsPacket(chans))
                     else:
                         break
-    return chans
+    return bytes(chans)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p0', '--port0', default='/dev/ttyAMA0', required=False)
@@ -212,7 +213,8 @@ args = parser.parse_args()
 # Start serial connection with RX 
 Thread(target=openSerial).start()
 
-if __name__ == "__main__":
+def startCam():
+    global BB, fps, pitch, thr
     while True:
 #        tStart = time()
         frame = picam2.capture_array()
@@ -230,7 +232,8 @@ if __name__ == "__main__":
         # Merge the resized ROI back into the frame
         frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
 
-        if BB is not None:
+        if BB is not None and skey == 10991099:
+#        if BB is not None:
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             success, frame = trackTarget(frame, chans[4]) # Track object
@@ -272,3 +275,6 @@ if __name__ == "__main__":
 
     # Stop tracking
     cv.destroyAllWindows()
+
+if __name__ == "__main__":
+    startCam()
