@@ -103,13 +103,13 @@ def packCrsfToBytes(channels) -> bytes:
         # Next dest should be shifted up by the bits consumed
         destShift = srcBitsLeft
 
-    return result
+    return bytes(result)
 
 #def channelsCrsfToChannelsPacket(channels) -> bytes:
 #    result = bytearray([CRSF_SYNC, 24, RC_CHANNELS_PACKED]) # 24 is packet length
 #    result += packCrsfToBytes(channels)
 #    result.append(crc8_data(result[2:]))
-#    return result
+#    return bytes(result)
 
 def unpackChannels(payload, dest, data):
     num_of_channels = 16
@@ -155,13 +155,13 @@ def trackTarget(frame):
             rcOverrides(1400, pitch, thr, 1450)
         if pitch_error > 20 and -20 < roll_error < 20:
 #            print("Down")
-            rcOverrides(roll, pitch, thr-50, yaw)
+            rcOverrides(roll, pitch, thr-100, yaw)
         if pitch_error < -5 and -20 < roll_error < 20:
 #            print("Up")
             rcOverrides(roll, pitch, thr+100, yaw)
         if roll_error > 20 and pitch_error > 20:
 #            print("Right and Down")
-            rcOverrides(1600, pitch, thr-50, 1550)
+            rcOverrides(1600, pitch, thr-100, 1550)
         if roll_error > 20 and pitch_error < -5:
 #            print("Right and Up")
             rcOverrides(1600, pitch, thr+100, 1550)
@@ -170,7 +170,7 @@ def trackTarget(frame):
             rcOverrides(1400, pitch, thr+100, 1450)
         if pitch_error > 20 and roll_error < -20:
 #            print("Left and Down")
-            rcOverrides(1400, pitch, thr-50, 1450)
+            rcOverrides(1400, pitch, thr-100, 1450)
         if -20 < roll_error < 20 and -5 < pitch_error < 20:
 #            print("Fly forward")
             rcOverrides(roll, pitch, thr, yaw)
@@ -216,7 +216,7 @@ def openSerial():
                                         rcOverrides(pwmCalc(chans[0]), pwmCalc(chans[1]), pwmCalc(chans[2]), pwmCalc(chans[3]))
                     else:
                         break
-    return chans
+    return bytes(chans)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p0', '--port0', default='/dev/ttyAMA0', required=False)
