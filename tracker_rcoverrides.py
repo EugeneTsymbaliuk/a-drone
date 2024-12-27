@@ -29,8 +29,8 @@ roll = 1500
 pitch = 1200
 
 # Wait 60 seconds
-print("Wait 60 seconds")
-sleep(60)
+#print("Wait 60 seconds")
+#sleep(60)
 
 # Create the connection to drone
 print('Connecting to FC')
