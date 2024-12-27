@@ -7,7 +7,7 @@ from time import time, sleep
 
 # Video resolution
 dispW=720
-dispH=520
+dispH=480
 
 # ROI size
 roi_size = 150
