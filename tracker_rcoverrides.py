@@ -23,10 +23,10 @@ y = dispH // 2
 BB = None
 
 # Channels1-4 values
-thr = 1500
+#thr = 1500
 yaw = 1500
 roll = 1500
-pitch = 1200
+#pitch = 1200
 
 # Wait 60 seconds
 #print("Wait 60 seconds")
@@ -126,15 +126,18 @@ while True:
     
     # Select Region on Interest (ROI) to track
 #    if key == ord("c"):
-    if vehicle.channels['5'] > 1800 and BB is None:
+    if vehicle.channels['6'] > 1800 and BB is None:
 #        print("Object is tracking")
  
         # Set red square coordinates. For 720x520 resolution
         BB = (x-25, y-25, 50, 50)        
-
+        
+        pitch = vehicle.channels['2']
+        thr = vehicle.channels['3']
+        
         # Enable stabilize mode
-        if vehicle.mode != "ALT_HOLD":
-            vehicle.mode = VehicleMode("ALT_HOLD")
+        #if vehicle.mode != "Stabilize":
+        #    vehicle.mode = VehicleMode("Stabilize")
 
         # Save throttle and pitch values
 #        pitch = vehicle.channels['10']
@@ -144,7 +147,7 @@ while True:
 
     # Stop tracking
 #    if key == ord("v"):
-    if vehicle.channels['5'] < 1800:
+    if vehicle.channels['6'] < 1800:
         BB = None
 #        print(vehicle.channels['5'], vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
         rcOverrides(vehicle.channels['9'], vehicle.channels['10'], vehicle.channels['11'], vehicle.channels['12'])
