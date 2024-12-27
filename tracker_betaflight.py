@@ -29,14 +29,10 @@ fps=0
 
 # Bounding Box
 BB = None
-sskey = '100000001daa5c9b'
+#sskey = '100000001daa5c9b'
 CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
 chans = []
-
-# Wait 30 seconds
-print("Wait 30 seconds")
-sleep(30)
 
 # Create picamera instance
 
@@ -58,7 +54,7 @@ def sinfo():
     f = open('/proc/cpuinfo','r')
     for l in f:
         if l.startswith('Serial'):
-            skey = l[-17:].strip()
+            skey = l[-18:].strip()
 
 def crc8_dvb_s2(crc, a) -> int:
   crc = crc ^ a
@@ -199,19 +195,18 @@ def openSerial():
                     elif len(input) >= expected_len:
                         single = input[:expected_len] # copy out this whole packet
                         input = input[expected_len:] # and remove it from the buffer
-
-                        if not crsf_validate_frame(single): # single[-1] != crc:
-                            packet = ' '.join(map(hex, single))
-                            print(f"crc error: {packet}")
-                        else:
-                            if single[2] == RC_CHANNELS_PACKED:
-                                dst = np.zeros(16, dtype=np.uint32)
-                                chans = unpackChannels(single[3:], dst, data=[])
-                                if ser.in_waiting > 0:
-                                    input.extend(ser.read(ser.in_waiting))
-                                else:
-                                    if BB is None:
-                                        ser2.write(channelsCrsfToChannelsPacket(chans))
+#                        if not crsf_validate_frame(single): # single[-1] != crc:
+#                            packet = ' '.join(map(hex, single))
+#                            print(f"crc error: {packet}")
+#                        else:
+                        if single[2] == RC_CHANNELS_PACKED:
+                            dst = np.zeros(16, dtype=np.uint32)
+                            chans = unpackChannels(single[3:], dst, data=[])
+                            if ser.in_waiting > 0:
+                                input.extend(ser.read(ser.in_waiting))
+                            else:
+                                if BB is None:
+                                    ser2.write(channelsCrsfToChannelsPacket(chans))
                     else:
                         break
     return bytes(chans)
@@ -226,6 +221,7 @@ args = parser.parse_args()
 Thread(target=openSerial).start()
 
 def startCam():
+    sskey = '100000001daa5c9b'
     sinfo()
     global BB, fps, pitch, thr
     while True:

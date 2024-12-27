@@ -25,7 +25,6 @@ fps=0
 
 # Bounding Box
 BB = None
-skey = 10991099
 
 CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
@@ -34,10 +33,6 @@ chans = []
 # Channels values
 yaw = 1500
 roll = 1500
-
-# Wait 60 seconds
-print("Wait 60 seconds")
-sleep(60)
 
 # Create the connection to drone
 print('Connecting to FC')
@@ -58,6 +53,13 @@ picam2.start()
 
 # Object tracker
 tracker = cv.TrackerCSRT_create() # Initialize tracker with CSRT algorithm
+
+def sinfo():
+    global skey
+    f = open('/proc/cpuinfo','r')
+    for l in f:
+        if l.startswith('Serial'):
+            skey = l[-18:].strip()
 
 def crc8_dvb_s2(crc, a) -> int:
   crc = crc ^ a
@@ -202,18 +204,18 @@ def openSerial():
                         single = input[:expected_len] # copy out this whole packet
                         input = input[expected_len:] # and remove it from the buffer
 
-                        if not crsf_validate_frame(single): # single[-1] != crc:
-                            packet = ' '.join(map(hex, single))
-                            print(f"crc error: {packet}")
-                        else:
-                            if single[2] == RC_CHANNELS_PACKED:
-                                dst = np.zeros(16, dtype=np.uint32)
-                                chans = unpackChannels(single[3:], dst, data=[])
-                                if ser.in_waiting > 0:
-                                    input.extend(ser.read(ser.in_waiting))
-                                else:
-                                    if BB is None:
-                                        rcOverrides(pwmCalc(chans[0]), pwmCalc(chans[1]), pwmCalc(chans[2]), pwmCalc(chans[3]))
+#                        if not crsf_validate_frame(single): # single[-1] != crc:
+#                            packet = ' '.join(map(hex, single))
+#                            print(f"crc error: {packet}")
+#                        else:
+                        if single[2] == RC_CHANNELS_PACKED:
+                            dst = np.zeros(16, dtype=np.uint32)
+                            chans = unpackChannels(single[3:], dst, data=[])
+                            if ser.in_waiting > 0:
+                                input.extend(ser.read(ser.in_waiting))
+                            else:
+                                if BB is None:
+                                    rcOverrides(pwmCalc(chans[0]), pwmCalc(chans[1]), pwmCalc(chans[2]), pwmCalc(chans[3]))
                     else:
                         break
     return bytes(chans)
@@ -228,7 +230,8 @@ Thread(target=openSerial).start()
 
 def startCam():
     global BB, fps, pitch, thr
-
+    sskey = '10991099'
+    
     while True:
     #    tStart = time()
         frame = picam2.capture_array()
@@ -246,7 +249,7 @@ def startCam():
         # Merge the resized ROI back into the frame
         frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
 
-        if BB is not None and skey == 10991099:
+        if BB is not None and sskey == '10991099':
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
     #        cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             success, frame = trackTarget(frame) # Track object
