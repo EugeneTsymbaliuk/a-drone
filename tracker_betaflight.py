@@ -47,7 +47,6 @@ picam2.start()
 
 # Object trackers
 # Legacy
-#tracker = cv.legacy.MultiTracker_create() # Does not work
 #tracker = cv.legacy.TrackerCSRT_create() # Good tracking with 9 FPS. But does not resume tracking 
 #tracker = cv.legacy.TrackerKCF_create() # Pure tracking
 #tracker = cv.legacy.TrackerMIL_create() # Weird behaviour
@@ -276,6 +275,8 @@ def startCam():
     
             if chans[5] < 1600 and BB is not None:
                 BB = None
+                # For legacy trackers
+                #tracker.clear()
 
         except IndexError:
             cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
