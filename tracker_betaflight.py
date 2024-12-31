@@ -45,8 +45,21 @@ picam2.preview_configuration.align()
 picam2.configure("preview")
 picam2.start()
 
-# Object tracker
+# Object trackers
+# Legacy
+#tracker = cv.legacy.MultiTracker_create() # Does not work
+#tracker = cv.legacy.TrackerCSRT_create() # Good tracking with 9 FPS. But does not resume tracking 
+#tracker = cv.legacy.TrackerKCF_create() # Pure tracking
+#tracker = cv.legacy.TrackerMIL_create() # Weird behaviour
+#tracker = cv.legacy.TrackerMOSSE_create() # Very fast (44 FPS) but poor tracking
+#tracker = cv.legacy.TrackerMedianFlow_create() # Fast tracking and tracking box increases  
+#tracker = cv.legacy.TrackerTLD_create() # 7 FPS tracking
+
+# Newer
 tracker = cv.TrackerCSRT_create() # Initialize tracker with CSRT algorithm
+#tracker = cv.TrackerGOTURN_create() # Need ML Dataset
+#tracker = cv.TrackerKCF_create() # Fails after second round
+#tracker = cv.TrackerMIL_create() # Similar to CSRT
 
 def sinfo():
     global skey
