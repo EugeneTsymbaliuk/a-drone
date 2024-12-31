@@ -270,6 +270,7 @@ def startCam():
             cv.imshow("Frame", frame)
 
         if BB is None:
+            tracker.clear()
             cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
         cv.imshow("Frame", frame)
