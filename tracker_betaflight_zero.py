@@ -148,44 +148,44 @@ def trackTarget(frame, arm_check):
             if roll_error > 20 and -20 < pitch_error < 20:
                 cv.putText(frame, "Right", (5,230), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Right")
-#                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and -20 < pitch_error < 20:
                 cv.putText(frame, "Left", (dispW-120,dispH-250), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Left")
-#                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and -20 < roll_error < 20:
                 cv.putText(frame, "Down", (dispW-370,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Down")
-#                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr-150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr-150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error < -20 and -20 < roll_error < 20:
                 cv.putText(frame, "Up", (dispW-370,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Up")
-#                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr+150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr+150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error > 20:
                 cv.putText(frame, "Right & Down", (dispW-715,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Right and Down")
-#                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr-150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr-150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error < -20:
                 cv.putText(frame, "Right & Up", (dispW-715,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Right and Up")
-#                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr+150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr+150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and pitch_error < -20:
                 cv.putText(frame, "Left & Up", (dispW-130,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Left and Up")
-#                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr+150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr+150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and roll_error < -20:
                 cv.putText(frame, "Left & Down", (dispW-130,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Left and Down")
-#                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr-150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr-150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if -20 < roll_error < 20 and -20 < pitch_error < 20:
                 cv.putText(frame, "Forward", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Fly forward")
-#                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
         else:
     #        print("Target is lost!")
             cv.putText(frame, "Lost target!", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
-    #        ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
     return success, frame
 
@@ -260,8 +260,8 @@ def startCam():
         if BB is not None:
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-            success, frame = trackTarget(frame, 1800)
-#            success, frame = trackTarget(frame, chans[4]) # Track object
+#            success, frame = trackTarget(frame, 1800)
+            success, frame = trackTarget(frame, chans[4]) # Track object
 
         if BB is None:
             tracker.clear()
@@ -294,8 +294,8 @@ def startCam():
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             pass
         
-#        cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
-#        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
+        cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
+        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
         cv.imshow("Frame", frame)
 
         # Close video window
