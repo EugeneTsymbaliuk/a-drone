@@ -51,7 +51,7 @@ picam2.start()
 #tracker = cv.legacy.TrackerKCF_create() # Pure tracking
 #tracker = cv.legacy.TrackerMIL_create() # Weird behaviour
 #tracker = cv.legacy.TrackerMOSSE_create() # Very fast (44 FPS) but poor tracking
-#tracker = cv.legacy.TrackerMedianFlow_create() # Fast tracking and tracking box increases  
+#tracker = cv.legacy.TrackerMedianFlow_create() # Fast tracking and tracking box increases. Best in my opinion 
 #tracker = cv.legacy.TrackerTLD_create() # 7 FPS tracking
 
 # Newer
