@@ -29,7 +29,6 @@ fps=0
 
 # Bounding Box
 BB = None
-#sskey = '100000001daa5c9b'
 CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
 chans = []
