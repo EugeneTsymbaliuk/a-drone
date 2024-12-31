@@ -246,10 +246,12 @@ def startCam():
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             success, frame = trackTarget(frame, chans[4]) # Track object
+            cv.imshow("Frame", frame)
 
         if BB is None:
             cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+        cv.imshow("Frame", frame)
 
         key = cv.waitKey(1) & 0xFF
 
@@ -270,7 +272,6 @@ def startCam():
 
         cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
         cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
-        cv.imshow("Frame", frame)
 
         # Close video window
         if key == ord("q"):
