@@ -51,11 +51,11 @@ picam2.start()
 #tracker = cv.legacy.TrackerKCF_create() # Pure tracking
 #tracker = cv.legacy.TrackerMIL_create() # Weird behaviour
 #tracker = cv.legacy.TrackerMOSSE_create() # Very fast (44 FPS) but poor tracking
-#tracker = cv.legacy.TrackerMedianFlow_create() # Fast tracking and tracking box increases. Best in my opinion 
+tracker = cv.legacy.TrackerMedianFlow_create() # Fast tracking and tracking box increases. Best in my opinion 
 #tracker = cv.legacy.TrackerTLD_create() # 7 FPS tracking
 
 # Newer
-tracker = cv.TrackerCSRT_create() # Initialize tracker with CSRT algorithm
+#tracker = cv.TrackerCSRT_create() # Initialize tracker with CSRT algorithm
 #tracker = cv.TrackerGOTURN_create() # Need ML Dataset
 #tracker = cv.TrackerKCF_create() # Fails after second round
 #tracker = cv.TrackerMIL_create() # Similar to CSRT
@@ -154,36 +154,46 @@ def trackTarget(frame, arm_check):
         pitch_error = (y + h/2) - dispH/2
         if arm_check > 1700:
             if roll_error > 20 and -20 < pitch_error < 20:
+                cv.putText(frame, "Right", (5,230), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Right")
                 ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and -20 < pitch_error < 20:
+                cv.putText(frame, "Left", (dispW-120,dispH-250), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Left")
                 ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and -20 < roll_error < 20:
+                cv.putText(frame, "Down", (dispW-370,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Down")
                 ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr-150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if pitch_error < -5 and -20 < roll_error < 20:
+            if pitch_error < -20 and -20 < roll_error < 20:
+                cv.putText(frame, "Up", (dispW-370,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Up")
                 ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr+150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error > 20:
+                cv.putText(frame, "Right & Down", (dispW-715,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Right and Down")
                 ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr-150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if roll_error > 20 and pitch_error < -5:
+            if roll_error > 20 and pitch_error < -20:
+                cv.putText(frame, "Right & Up", (dispW-715,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Right and Up")
                 ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr+150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if roll_error < -20 and pitch_error < -5:
+            if roll_error < -20 and pitch_error < -20:
+                cv.putText(frame, "Left & Up", (dispW-130,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Left and Up")
                 ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr+150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and roll_error < -20:
+                cv.putText(frame, "Left & Down", (dispW-130,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Left and Down")
                 ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr-150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if -20 < roll_error < 20 and -5 < pitch_error < 20:
+            if -20 < roll_error < 20 and -20 < pitch_error < 20:
+                cv.putText(frame, "Forward", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Fly forward")
                 ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
-    else:
-#        print("Target is lost!")
-        ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+        else:
+#            print("Target is lost!")
+            cv.putText(frame, "Lost target!", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
+            ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
     return success, frame
 
