@@ -29,10 +29,6 @@ CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
 chans = []
 
-# Wait 30 seconds
-print("Wait 30 seconds")
-#sleep(30)
-
 # Create picamera instance
 picam2 = Picamera2()
 
@@ -50,7 +46,7 @@ picam2.start()
 #tracker = cv.legacy.TrackerKCF_create() # Pure tracking
 #tracker = cv.legacy.TrackerMIL_create() # Weird behaviour
 #tracker = cv.legacy.TrackerMOSSE_create() # Very fast (44 FPS) but poor tracking
-tracker = cv.legacy.TrackerMedianFlow_create() # Fast tracking and tracking box increases  
+#tracker = cv.legacy.TrackerMedianFlow_create() # Fast tracking and tracking box increases  
 #tracker = cv.legacy.TrackerTLD_create() # 7 FPS tracking
 
 # Newer
@@ -236,14 +232,14 @@ args = parser.parse_args()
 Thread(target=openSerial).start()
 
 def startCam():
-    global BB, fps, pitch, thr
+    global BB, fps, pitch, thr, tracker
     while True:
 #        tStart = time()
         frame = picam2.capture_array()
         frame = cv.flip(frame, -1)
 #        frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-#        frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-#        frame = cv.GaussianBlur(frame, (5, 5), 0)
+        gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        gray_frame = cv.GaussianBlur(frame, (7, 7), 0)
 
         # Crop a region of interest (ROI) from the frame
         roi = frame[y-25:y+25, x-25:x+25]
@@ -260,8 +256,8 @@ def startCam():
         if BB is not None:
             cv.putText(frame, "Tracking", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
-#            success, frame = trackTarget(frame, 1800)
-            success, frame = trackTarget(frame, chans[4]) # Track object
+#            success, frame = trackTarget(gray_frame, 1800)
+            success, frame = trackTarget(gray_frame, chans[4]) # Track object
 
         if BB is None:
             tracker.clear()
@@ -269,26 +265,26 @@ def startCam():
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
         key = cv.waitKey(1) & 0xFF
-
-        '''        
+        '''
         if key == ord("c"):
            BB = (x-25, y-25, 50, 50)
+           tracker = cv.legacy.TrackerMedianFlow_create()
            tracker.init(frame, BB)
 
         if key == ord("v"):
             BB = None
-        '''
-        
+        '''        
         try:
             if chans[5] > 1600 and BB is None:
                 pitch = chans[9]
                 thr = chans[10]
                 BB = (x-25, y-25, 50, 50)
+                tracker = cv.legacy.TrackerMedianFlow_create() 
                 tracker.init(frame, BB)
     
             if chans[5] < 1600 and BB is not None:
                 BB = None
-
+        
         except IndexError:
             cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
