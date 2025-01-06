@@ -270,7 +270,7 @@ def startCam():
 
             # Track object function
 #            success, frame = trackTarget(blur_frame, 1800)
-            success, frame = trackTarget(gray_frame, chans[4]) # Track object
+            success, frame = trackTarget(blur_frame, chans[4]) # Track object
 
             # Draw rectangle in the center. For 640x480 resolution
             cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 255), 2)
