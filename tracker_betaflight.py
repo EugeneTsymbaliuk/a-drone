@@ -147,7 +147,6 @@ def merge_roi(frame, roi, x, y):
 
 def trackTarget(frame, arm_check):
     (success, box) = tracker.update(frame)
-#    print(box)
     if success:
         (x, y, w, h) = [int(v) for v in box]
         cv.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
@@ -157,44 +156,44 @@ def trackTarget(frame, arm_check):
             if roll_error > 20 and -20 < pitch_error < 20:
                 cv.putText(frame, "Right", (5,230), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Right")
-#                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and -20 < pitch_error < 20:
                 cv.putText(frame, "Left", (dispW-120,dispH-250), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Left")
-#                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and -20 < roll_error < 20:
                 cv.putText(frame, "Down", (dispW-370,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Down")
-#                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr-150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr-150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error < -20 and -20 < roll_error < 20:
                 cv.putText(frame, "Up", (dispW-370,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Up")
-#                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr+150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr+150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error > 20:
                 cv.putText(frame, "Right & Down", (dispW-715,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Right and Down")
-#                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr-150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr-150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error > 20 and pitch_error < -20:
                 cv.putText(frame, "Right & Up", (dispW-715,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Right and Up")
-#                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr+150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([1192, pitch, thr+150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if roll_error < -20 and pitch_error < -20:
                 cv.putText(frame, "Left & Up", (dispW-130,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
 #                print("Left and Up")
-#                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr+150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr+150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if pitch_error > 20 and roll_error < -20:
                 cv.putText(frame, "Left & Down", (dispW-130,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Left and Down")
-#                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr-150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([792, pitch, thr-150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
             if -20 < roll_error < 20 and -20 < pitch_error < 20:
                 cv.putText(frame, "Forward", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
     #                print("Fly forward")
-#                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+                ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
         else:
     #        print("Target is lost!")
             cv.putText(frame, "Lost target!", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
-    #        ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
+            ser2.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
     return success, frame
 
@@ -247,7 +246,7 @@ def startCam():
     sinfo()
     global BB, fps, pitch, thr, tracker
     while True:
-        tStart = time()
+#        tStart = time()
         frame = picam2.capture_array()
         frame = cv.flip(frame, -1)
 #        frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
@@ -257,9 +256,6 @@ def startCam():
         # Crop a region of interest (ROI) from the frame
         roi = frame[y-25:y+25, x-25:x+25]
 
-        # Draw rectangle in the center. For 640x480 resolution
-#        cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
-
         # Resize the ROI to a specific size (e.g., 200x200)
         roi_resized = cv.resize(roi, (roi_size, roi_size))
 
@@ -268,21 +264,29 @@ def startCam():
 
         if BB is not None and skey == sskey:
 #        if BB is not None:
+            # Draw text
             cv.putText(frame, "Tracking", (5,50), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
-            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+#            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+
+            # Track object function
             success, frame = trackTarget(blur_frame, 1800)
-            cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
-            cv.imshow("Frame", frame)
 #            success, frame = trackTarget(gray_frame, chans[4]) # Track object
 
-        if BB is None:
-            cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
-            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+            # Draw rectangle in the center. For 640x480 resolution
             cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
-            cv.imshow("Frame", frame)
 
+        if BB is None:
+            # Draw text
+            cv.putText(frame, "Connected", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+#            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
+
+            # Draw rectangle in the center. For 640x480 resolution
+            cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
+
+        # Enable trigger from keyboard
         key = cv.waitKey(1) & 0xFF
 
+        '''
         if key == ord("c"):
            BB = (x-25, y-25, 50, 50)
            tracker = cv.legacy.TrackerMedianFlow_create()
@@ -290,15 +294,17 @@ def startCam():
 
         if key == ord("v"):
             BB = None
-
         '''
         try:
+            # Initiate tracking
             if chans[5] > 1600 and BB is None:
                 pitch = chans[1]
                 thr = chans[2]
                 BB = (x-25, y-25, 50, 50)
+                tracker = cv.legacy.TrackerMedianFlow_create()
                 tracker.init(frame, BB)
-    
+
+            # Disable tracking
             if chans[5] < 1600 and BB is not None:
                 BB = None
 
@@ -306,19 +312,23 @@ def startCam():
             cv.putText(frame, "NO RC Control", (5,55), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
             pass
-        '''
-#        cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
-#        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
-#        cv.imshow("Frame", frame)
+        
+        # Launch window on full screen
+        cv.namedWindow("Frame", cv.WND_PROP_FULLSCREEN)
+        cv.setWindowProperty("Frame", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
+
+        # Launch video from camera
+        cv.imshow("Frame", frame)
+
         # Close video window
         if key == ord("q"):
                 break
 
         # FPS count
-        tEnd=time()
-        loopTime=tEnd-tStart
+#        tEnd=time()
+#        loopTime=tEnd-tStart
 #        print(loopTime)
-        fps=.9*fps + .1*(1/loopTime)
+#        fps=.9*fps + .1*(1/loopTime)
 
     # Stop tracking
     cv.destroyAllWindows()
