@@ -273,7 +273,7 @@ def startCam():
 #            success, frame = trackTarget(gray_frame, chans[4]) # Track object
 
             # Draw rectangle in the center. For 640x480 resolution
-            cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
+            cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 255), 2)
 
         if BB is None:
             # Draw text
@@ -281,7 +281,7 @@ def startCam():
 #            cv.putText(frame, str(int(fps))+' FPS', (5,80), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,255), 2)
 
             # Draw rectangle in the center. For 640x480 resolution
-            cv.rectangle(frame, (x-25, y+25), (x+25, y-25), (0, 255, 0), 2)
+            cv.rectangle(frame, (x-25, y-100), (x+25, y-150), (0, 255, 0), 2)
 
         # Enable trigger from keyboard
         key = cv.waitKey(1) & 0xFF
@@ -300,7 +300,7 @@ def startCam():
             if chans[5] > 1600 and BB is None:
                 pitch = chans[1]
                 thr = chans[2]
-                BB = (x-25, y-25, 50, 50)
+                BB = (x-25, y-150, 50, 50)
                 tracker = cv.legacy.TrackerMedianFlow_create()
                 tracker.init(frame, BB)
 
