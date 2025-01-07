@@ -39,7 +39,7 @@ picam2 = Picamera2()
 
 # Video Settings
 picam2.preview_configuration.main.size = (dispW,dispH)
-picam2.preview_configuration.main.format = "RGB888"
+picam2.preview_configuration.main.format = "XRGB8888"
 picam2.preview_configuration.controls.FrameRate=40
 picam2.preview_configuration.align()
 picam2.configure("preview")
