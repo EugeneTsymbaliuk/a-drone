@@ -254,7 +254,7 @@ def startCam():
         blur_frame = cv.GaussianBlur(frame, (7, 7), 0)
 
         # Crop a region of interest (ROI) from the frame
-        roi = frame[y-25:y+25, x-25:x+25]
+        roi = frame[y-150:y-100, x-25:x+25]
 
         # Resize the ROI to a specific size (e.g., 200x200)
         roi_resized = cv.resize(roi, (roi_size, roi_size))
