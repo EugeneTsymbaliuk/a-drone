@@ -186,11 +186,11 @@ def startCam():
         # Merge the resized ROI back into the frame
 #        frame = merge_roi(frame, roi_resized, (dispW-roi_size-20), 0)
 
-        if BB is 1:
+        if BB == 1:
             cv.putText(frame, "Up", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
             ser.write(channelsCrsfToChannelsPacket([992, 1192, thr+100, 992, 1792, 191, 992, 1792, 992, 992, 992, 992, 992, 992, 992, 992]))
 
-        if BB is 2:
+        if BB == 2:
             cv.putText(frame, "Down", (5,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
             ser.write(channelsCrsfToChannelsPacket([992, 1192, thr-100, 992, 1792, 191, 992, 191, 992, 992, 992, 992, 992, 992, 992, 992]))
 
