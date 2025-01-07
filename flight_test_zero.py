@@ -117,59 +117,7 @@ def unpackChannels(payload, dest, data):
 def merge_roi(frame, roi, x, y):
     frame[y:y+roi_size, x:x+roi_size, :] = roi
     return frame
-'''
-def trackTarget(frame, arm_check):
-    (success, box) = tracker.update(frame)
-    if success:
-        (x, y, w, h) = [int(v) for v in box]
-        cv.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
-        roll_error = (x + w/2) - dispW/2
-        pitch_error = (y + h/2) - dispH/2
-        if arm_check > 1700:
-            if roll_error > 20 and -20 < pitch_error < 20:
-                cv.putText(frame, "Right", (5,230), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-    #                print("Right")
-                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if roll_error < -20 and -20 < pitch_error < 20:
-                cv.putText(frame, "Left", (dispW-120,dispH-250), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-#                print("Left")
-                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if pitch_error > 20 and -20 < roll_error < 20:
-                cv.putText(frame, "Down", (dispW-370,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-    #                print("Down")
-                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr-150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if pitch_error < -20 and -20 < roll_error < 20:
-                cv.putText(frame, "Up", (dispW-370,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-    #                print("Up")
-                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr+150, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if roll_error > 20 and pitch_error > 20:
-                cv.putText(frame, "Right & Down", (dispW-715,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-    #                print("Right and Down")
-                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr-150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if roll_error > 20 and pitch_error < -20:
-                cv.putText(frame, "Right & Up", (dispW-715,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-    #                print("Right and Up")
-                ser.write(channelsCrsfToChannelsPacket([1192, pitch, thr+150, 1092, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if roll_error < -20 and pitch_error < -20:
-                cv.putText(frame, "Left & Up", (dispW-130,dispH-460), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-#                print("Left and Up")
-                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr+150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if pitch_error > 20 and roll_error < -20:
-                cv.putText(frame, "Left & Down", (dispW-130,dispH-30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-    #                print("Left and Down")
-                ser.write(channelsCrsfToChannelsPacket([792, pitch, thr-150, 892, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-            if -20 < roll_error < 20 and -20 < pitch_error < 20:
-                cv.putText(frame, "Forward", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
-    #                print("Fly forward")
-                ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
 
-        else:
-    #        print("Target is lost!")
-            cv.putText(frame, "Lost target!", (dispW-400,dispH-280), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
-            ser.write(channelsCrsfToChannelsPacket([992, pitch, thr, 992, 1792, 1792, 992, 992, 992, 992, 992, 992, 992, 992, 992, 992]))
-
-    return success, frame
-'''
 def openSerial():
     print("Open serial port")
     global chans, ser
