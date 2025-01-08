@@ -41,6 +41,8 @@ picam2 = Picamera2()
 picam2.preview_configuration.main.size = (dispW,dispH)
 picam2.preview_configuration.main.format = "XRGB8888"
 picam2.preview_configuration.controls.FrameRate=30
+picam2.preview_configuration.controls.Brightness = 0.1
+picam2.preview_configuration.controls.Contrast = 1.2
 picam2.preview_configuration.align()
 picam2.configure("preview")
 picam2.start()
