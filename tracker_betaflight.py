@@ -14,8 +14,8 @@ import numpy as np
 from threading import Thread
 
 # Video resolution
-dispW=640
-dispH=480
+dispW=720
+dispH=576
 
 # ROI size
 roi_size = 150
