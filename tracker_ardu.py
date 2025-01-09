@@ -11,7 +11,7 @@ from threading import Thread
 
 # Video resolution
 dispW=720
-dispH=480
+dispH=576
 
 # ROI size
 roi_size = 150
