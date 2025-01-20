@@ -20,7 +20,7 @@ RC_CHANNELS_PACKED = 0x16
 chans = []
 
 # Receiver IP and UDP port
-UDP_IP = "192.168.1.145"  # Replace with the target IP address
+UDP_IP = "192.168.10.1"  # Replace with the target IP address
 UDP_PORT = 5005       # Replace with the target port
 
 sskey = '100000001daa5c9b'
