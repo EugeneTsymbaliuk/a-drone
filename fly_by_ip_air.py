@@ -16,7 +16,7 @@ chans = []
 UDP_IP = "0.0.0.0" 
 UDP_PORT = 5005
 
-sskey = '100000001daa5c9b'
+sskey = '0000000006f12a37'
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p0', '--port0', default='/dev/ttyAMA0', required=False)
