@@ -80,6 +80,7 @@ def channelsCrsfToChannelsPacket(channels) -> bytes:
     return bytes(result)
 
 def openSerial():
+    global chans
     sinfo()
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind((UDP_IP, UDP_PORT))
