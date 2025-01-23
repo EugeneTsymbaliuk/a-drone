@@ -31,10 +31,6 @@ CRSF_SYNC = 0xC8
 RC_CHANNELS_PACKED = 0x16
 chans = []
 
-# Wait 60 seconds
-print("Wait 30 seconds")
-sleep(30)
-
 # Create picamera instance
 picam2 = Picamera2()
 
