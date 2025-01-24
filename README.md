@@ -29,7 +29,7 @@ Create starter file:
 touch ~/starter.sh
 echo '#!/bin/bash' >> ~/starter.sh
 echo  >> ~/starter.sh
-echo 'python ~/dronekit-python/tracker_ardu.py' >> ~/starter.sh
+echo 'python ~/dronekit-python/tracker_betaflight.py' >> ~/starter.sh
 chmod 755 ~/starter.sh
 ```
 Change window manager (mutter to openbox-lxde):
