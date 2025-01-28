@@ -1,4 +1,9 @@
+
+![white background](https://github.com/user-attachments/assets/b1138b20-78b6-4019-8555-94abfe7d106e)
+![RP0](https://github.com/user-attachments/assets/c0970898-2d92-4a27-a1f0-996b5a072682)
+
 Download Raspberry Pi Imager and inslall OS on Raspberry Pi
+
 (Attention):
 Install legacy Raspbian Bullseye 64-bit
 https://www.raspberrypi.com/software/
