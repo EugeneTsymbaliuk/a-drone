@@ -16,7 +16,7 @@ sudo apt update
 sudo apt -y upgrade
 sudo apt install -y python3-dev python3-opencv
 ```
-Install apps:
+Install apps (for Ardupilot only):
 ```
 sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 pip3 install dronekit
@@ -90,7 +90,7 @@ At the prompt “Would you like a login shell to be accessible over serial?”, 
 At the prompt “Would you like the serial port hardware to be enabled?”, answer 'Yes'
 Exit raspi-config and reboot the Raspberry Pi for changes to take effect
 
-Get dronekit scripts from GitHub:
+Get dronekit scripts from GitHub (for Ardupilot only):
 ```
 git clone https://github.com/dronekit/dronekit-python.git
 ```
