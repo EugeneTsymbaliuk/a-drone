@@ -16,7 +16,7 @@ sudo apt update
 sudo apt -y upgrade
 sudo apt install -y python3-dev python3-opencv
 ```
-Install apps (for Ardupilot only). For Betaflight skip this step:
+(for Ardupilot only). For Betaflight skip this step. Install apps:
 ```
 sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 pip3 install dronekit
