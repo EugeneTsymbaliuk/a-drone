@@ -102,6 +102,7 @@ After installation we can check mavlink connection with FC:
 mavproxy.py --master=/dev/ttyAMA0 --baudrate 57600
 ```
 # INAV
+
 1. Install INAV Configurator 8
 2. Download zip https://github.com/iNavFlight/inav/archive/refs/tags/8.0.1-RC1.zip
 3. Unzip 8.0.1-RC1.zip and upload on Raspberry pi
