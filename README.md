@@ -133,3 +133,4 @@ make SPEEDYBEEF405V3
 set msp_override_channels=15
 save
 ```
+13. Enable MSP on UART2 in Ports
