@@ -102,6 +102,7 @@ After installation we can check mavlink connection with FC:
 mavproxy.py --master=/dev/ttyAMA0 --baudrate 57600
 ```
 # INAV
+![407250028-b1138b20-78b6-4019-8555-94abfe7d106e](https://github.com/user-attachments/assets/535540e5-59ea-4d84-a134-116e57c7c9ab)
 
 1. Install INAV Configurator 8
 2. Download zip https://github.com/iNavFlight/inav/archive/refs/tags/8.0.1-RC1.zip
