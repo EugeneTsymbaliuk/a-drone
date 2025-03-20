@@ -96,7 +96,38 @@ Get dronekit scripts from GitHub:
 ```
 git clone https://github.com/dronekit/dronekit-python.git
 ```
+
 After installation we can check mavlink connection with FC:
 ```
 mavproxy.py --master=/dev/ttyAMA0 --baudrate 57600
+```
+# INAV
+1. Install INAV Configurator 8
+2. Download zip https://github.com/iNavFlight/inav/archive/refs/tags/8.0.1-RC1.zip
+3. Unzip 8.0.1-RC1.zip and upload on Raspberry pi
+4. Create a build directory and run the cmake and make commands from within the build directory
+```
+cd 8.0.1-RC1/ 
+mkdir build
+cd build
+cmake ..
+```
+5. Buld the firmware. Find FC name "make help | less"
+```
+make SPEEDYBEEF405V3
+```
+6. Download inav_8.0.1_SPEEDYBEEF405V3.hex on your PC
+7. Connect to flight conntroller and backup your settings (CLI -> diff all -> Save to File)
+9. Flash inav_8.0.1_SPEEDYBEEF405V3.hex on FC
+10. Connect to fight controller and read setting (CLI -> Load from back up file)
+11. You should now have a “MSP RC OVERRIDE” mode available in “Modes” -> “Misc Modes”. Assign an RC channel from  your “real” controller to toggle this mode on and off.
+12. Configure which channels we allow the computer to actually override
+- 0000000000000000 = 0 -> don’t override any channels
+- 1111111111111111 = 65535 -> override channels 1-16
+- 0000000000001111 = 15 -> override channels 1-4
+- 0000000011110000 = 240 -> override channels 5-8
+- 1010101010101010 = 43690 -> override all even channels
+```
+set msp_override_channels=15
+save
 ```
