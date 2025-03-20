@@ -19,8 +19,6 @@ sudo apt install -y python3-dev python3-opencv
 Install apps:
 ```
 sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
-pip3 install Cython
-pip3 install pyserial
 pip3 install dronekit
 pip3 install MAVProxy
 ```
