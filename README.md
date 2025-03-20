@@ -16,13 +16,13 @@ sudo apt update
 sudo apt -y upgrade
 sudo apt install -y python3-dev python3-opencv
 ```
-Install apps (for Ardupilot only):
+Install apps (for Ardupilot only). For Betaflight skip this step:
 ```
 sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 pip3 install dronekit
 pip3 install MAVProxy
 ```
-To work dronekit in python from 3.10 you need to
+(for Ardupilot only). For Betaflight skip this step. To work dronekit in python from 3.10 you need to
 ```
 nano +2689 ~/.local/lib/python3.11/site-packages/dronekit/__init__.py
 change collections.MutableMapping on collections.abc.MuttableMapping
