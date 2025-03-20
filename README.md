@@ -16,17 +16,6 @@ sudo apt update
 sudo apt -y upgrade
 sudo apt install -y python3-dev python3-opencv
 ```
-(for Ardupilot only). For Betaflight skip this step. Install apps:
-```
-sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
-pip3 install dronekit
-pip3 install MAVProxy
-```
-(for Ardupilot only). For Betaflight skip this step. To work dronekit in python from 3.10 you need to
-```
-nano +2689 ~/.local/lib/python3.11/site-packages/dronekit/__init__.py
-change collections.MutableMapping on collections.abc.MuttableMapping
-```
 Create starter file:
 ```
 touch ~/starter.sh
@@ -90,12 +79,24 @@ At the prompt “Would you like a login shell to be accessible over serial?”, 
 At the prompt “Would you like the serial port hardware to be enabled?”, answer 'Yes'
 Exit raspi-config and reboot the Raspberry Pi for changes to take effect
 
-Get dronekit scripts from GitHub (for Ardupilot only):
+# Ardupilot
+1. Install apps:
+```
+sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
+pip3 install dronekit
+pip3 install MAVProxy
+```
+2. To work dronekit in python from 3.10 you need to
+```
+nano +2689 ~/.local/lib/python3.11/site-packages/dronekit/__init__.py
+change collections.MutableMapping on collections.abc.MuttableMapping
+```
+3. Get dronekit scripts from GitHub:
 ```
 git clone https://github.com/dronekit/dronekit-python.git
 ```
 
-After installation we can check mavlink connection with FC  (for Ardupilot only):
+4. After installation we can check mavlink connection with FC:
 ```
 mavproxy.py --master=/dev/ttyAMA0 --baudrate 57600
 ```
