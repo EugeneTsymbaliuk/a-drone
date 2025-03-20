@@ -95,7 +95,7 @@ Get dronekit scripts from GitHub (for Ardupilot only):
 git clone https://github.com/dronekit/dronekit-python.git
 ```
 
-After installation we can check mavlink connection with FC:
+After installation we can check mavlink connection with FC  (for Ardupilot only):
 ```
 mavproxy.py --master=/dev/ttyAMA0 --baudrate 57600
 ```
