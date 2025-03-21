@@ -106,19 +106,23 @@ mavproxy.py --master=/dev/ttyAMA0 --baudrate 57600
 1. Install INAV Configurator 8
 2. Download zip https://github.com/iNavFlight/inav/archive/refs/tags/8.0.1-RC1.zip
 3. Unzip 8.0.1-RC1.zip and upload on Raspberry pi
-4. Create a build directory and run the cmake and make commands from within the build directory
+4. Uncomment //#define USE_MSP_RC_OVERRIDE to #define USE_MSP_RC_OVERRIDE (line 158 as of INAV 8.0.0)
+```
+nano +158 8.0.1-RC1/src/main/target/common.h
+```
+5. Create a build directory and run the cmake and make commands from within the build directory
 ```
 cd 8.0.1-RC1/ 
 mkdir build
 cd build
 cmake ..
 ```
-5. Buld the firmware. Find FC name "make help | less"
+6. Buld the firmware. Find FC name "make help | less"
 ```
 make SPEEDYBEEF405V3
 ```
-6. Download inav_8.0.1_SPEEDYBEEF405V3.hex on your PC
-7. Connect to flight conntroller and backup your settings (CLI -> diff all -> Save to File)
+7. Download inav_8.0.1_SPEEDYBEEF405V3.hex on your PC
+8. Connect to flight conntroller and backup your settings (CLI -> diff all -> Save to File)
 9. Flash inav_8.0.1_SPEEDYBEEF405V3.hex on FC
 10. Connect to fight controller and read setting (CLI -> Load from back up file)
 11. You should now have a “MSP RC OVERRIDE” mode available in “Modes” -> “Misc Modes”. Assign an RC channel from  your “real” controller to toggle this mode on and off.
