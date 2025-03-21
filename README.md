@@ -100,6 +100,8 @@ git clone https://github.com/dronekit/dronekit-python.git
 ```
 mavproxy.py --master=/dev/ttyAMA0 --baudrate 57600
 ```
+5. Upload file tracker_ardu.py on Raspberry pi
+
 # INAV
 ![407250028-b1138b20-78b6-4019-8555-94abfe7d106e](https://github.com/user-attachments/assets/535540e5-59ea-4d84-a134-116e57c7c9ab)
 
@@ -137,3 +139,4 @@ set msp_override_channels=15
 save
 ```
 13.  Connect to fight controller and enable MSP on UART2 in Ports
+14.  Upload file tracker_inav_msp.py on Raspberry pi
