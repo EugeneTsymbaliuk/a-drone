@@ -275,14 +275,14 @@ def startCam():
             BB = None
         '''        
         try:
-            if chans[8] > 1600 and BB is None:
+            if chans[5] > 1600 and BB is None:
                 pitch = chans[9]
                 thr = chans[10]
                 BB = (x-25, y-25, 50, 50)
                 tracker = cv.legacy.TrackerMedianFlow_create() 
                 tracker.init(frame, BB)
     
-            if chans[8] < 1600 and BB is not None:
+            if chans[5] < 1600 and BB is not None:
                 BB = None
         
         except IndexError:
