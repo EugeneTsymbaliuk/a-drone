@@ -1,6 +1,6 @@
 
 ![white background](https://github.com/user-attachments/assets/b1138b20-78b6-4019-8555-94abfe7d106e)
-![RP0](https://github.com/user-attachments/assets/c0970898-2d92-4a27-a1f0-996b5a072682)
+![IMG_9266](https://github.com/user-attachments/assets/402f1190-5ed0-4b07-8406-937da907502e)
 
 1. Download Raspberry Pi Imager and inslall OS on Raspberry Pi
 
