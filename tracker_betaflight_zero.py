@@ -275,6 +275,7 @@ def startCam():
             BB = None
         '''        
         try:
+            # Enable tracking on AUX2
             if chans[5] > 1600 and BB is None:
                 pitch = chans[9]
                 thr = chans[10]
@@ -282,6 +283,7 @@ def startCam():
                 tracker = cv.legacy.TrackerMedianFlow_create() 
                 tracker.init(frame, BB)
     
+            # Disable tracking on AUX2
             if chans[5] < 1600 and BB is not None:
                 BB = None
         
