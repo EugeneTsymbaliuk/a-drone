@@ -17,6 +17,7 @@ sudo apt -y upgrade
 sudo apt install -y python3-dev python3-opencv
 ```
 3. Create starter file:
+ATTENTION: If you do not need Desktop then skip item 3-6 and go to item 7
 ```
 touch ~/starter.sh
 echo '#!/bin/bash' >> ~/starter.sh
@@ -42,7 +43,12 @@ echo 'xset s noblank' >> ~/.config/lxsession/LXDE-pi/autostart
 echo 'xset -dpms' >> ~/.config/lxsession/LXDE-pi/autostart
 echo 'xset -s off' >> ~/.config/lxsession/LXDE-pi/autostart
 ```
-7. Enable UART1 on Raspberry pi (add to the end of the file):
+7. Open crontab
+```
+crontab -e
+@reboot sleep 20; /usr/bin/python3 ~/dronekit-python/your_script.py &
+```
+8. Enable UART1 on Raspberry pi (add to the end of the file):
 ```
 sudo nano /boot/config.txt
 #Enable UART1
@@ -54,20 +60,20 @@ dtoverlay=uart2
 #Enable PAL on video
 sdtv_mode = 2
 ```
-8. Increase Swap to RAM size:
+9. Increase Swap to RAM size:
 ```
 sudo dphys-swapfile swapoff
 sudo nano /etc/dphys-swapfile
 sudo dphys-swapfile setup
 sudo dphys-swapfile swapon
 ```
-9. Enable Composite Video:
+10. Enable Composite Video:
 ```
 sudo raspi-config
 ```
 Display Options -> Composite
 
-10. Enable SSH and Serial Port on Raspberry pi:
+11. Enable SSH and Serial Port on Raspberry pi:
 ```
 sudo raspi-config
 ```
