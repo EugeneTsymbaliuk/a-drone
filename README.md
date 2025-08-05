@@ -43,12 +43,19 @@ echo 'xset s noblank' >> ~/.config/lxsession/LXDE-pi/autostart
 echo 'xset -dpms' >> ~/.config/lxsession/LXDE-pi/autostart
 echo 'xset -s off' >> ~/.config/lxsession/LXDE-pi/autostart
 ```
-7. Open crontab
+7. Disable Desktop
+```
+sudo raspi-config
+```
+-	Select option 1 - System Options
+-	Select option S5 - Boot / Autologin
+-	Select option B1 - Console
+8. Open crontab
 ```
 crontab -e
 @reboot sleep 20; /usr/bin/python3 ~/dronekit-python/your_script.py &
 ```
-8. Enable UART1 on Raspberry pi (add to the end of the file):
+9. Enable UART1 on Raspberry pi (add to the end of the file):
 ```
 sudo nano /boot/config.txt
 #Enable UART1
@@ -60,20 +67,20 @@ dtoverlay=uart2
 #Enable PAL on video
 sdtv_mode = 2
 ```
-9. Increase Swap to RAM size:
+10. Increase Swap to RAM size:
 ```
 sudo dphys-swapfile swapoff
 sudo nano /etc/dphys-swapfile
 sudo dphys-swapfile setup
 sudo dphys-swapfile swapon
 ```
-10. Enable Composite Video:
+11. Enable Composite Video:
 ```
 sudo raspi-config
 ```
 Display Options -> Composite
 
-11. Enable SSH and Serial Port on Raspberry pi:
+12. Enable SSH and Serial Port on Raspberry pi:
 ```
 sudo raspi-config
 ```
