@@ -95,7 +95,7 @@ Exit raspi-config and reboot the Raspberry Pi for changes to take effect
 # Ardupilot
 1. Install apps:
 ```
-sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
+sudo rm /usr/lib/python3.13/EXTERNALLY-MANAGED
 pip3 install dronekit
 pip3 install future
 pip3 install MAVProxy
