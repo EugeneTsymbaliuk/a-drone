@@ -95,14 +95,14 @@ Exit raspi-config and reboot the Raspberry Pi for changes to take effect
 # Ardupilot
 1. Install apps:
 ```
-sudo rm /usr/lib/python3.13/EXTERNALLY-MANAGED
+sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 pip3 install dronekit
 pip3 install future
 pip3 install MAVProxy
 ```
-2. To work dronekit in python from 3.10 you need to
+2. To work dronekit in python from 3.11 you need to
 ```
-nano +2689 ~/.local/lib/python3.13/site-packages/dronekit/__init__.py
+nano +2689 ~/.local/lib/python3.11/site-packages/dronekit/__init__.py
 change collections.MutableMapping on collections.abc.MuttableMapping
 ```
 3. Get dronekit scripts from GitHub:
