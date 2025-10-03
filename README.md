@@ -6,7 +6,7 @@
 
 (Attention):
 Install legacy Raspbian Bullseye 64-bit for Raspberry Pi 3-5
-[https://www.raspberrypi.com/software/](https://downloads.raspberrypi.com/raspios_oldstable_arm64/images/raspios_oldstable_arm64-2025-05-07/2025-05-06-raspios-bullseye-arm64.img.xz)
+https://downloads.raspberrypi.com/raspios_oldstable_arm64/images/raspios_oldstable_arm64-2025-05-07/2025-05-06-raspios-bullseye-arm64.img.xz
 
 For Raspberry Pi Zero 2w
 https://downloads.raspberrypi.com/raspios_oldstable_full_armhf/images/raspios_oldstable_full_armhf-2025-05-07/2025-05-06-raspios-bullseye-armhf-full.img.xz
