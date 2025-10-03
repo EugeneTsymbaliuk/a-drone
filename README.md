@@ -102,7 +102,7 @@ pip3 install MAVProxy
 ```
 2. To work dronekit in python from 3.10 you need to
 ```
-nano +2689 ~/.local/lib/python3.11/site-packages/dronekit/__init__.py
+nano +2689 ~/.local/lib/python3.13/site-packages/dronekit/__init__.py
 change collections.MutableMapping on collections.abc.MuttableMapping
 ```
 3. Get dronekit scripts from GitHub:
